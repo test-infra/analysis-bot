@@ -230,8 +230,6 @@ def trade_analysis_500(client,market,opt):
         sell_values=sell_values*ethPrice
     total_buy=int(sum(buy_values))
     total_sell=int(sum(sell_values))
-    n_buy=len(buy_values)
-    n_sell=len(sell_values)
     sig_buy=[]
     sig_sell=[]
     thresholds=[100,200,500,1000,2000,5000,10000]
@@ -246,7 +244,14 @@ def trade_analysis_500(client,market,opt):
     msg=msg+'\n~ 1-10$: Buy '+str(n_buy_small-n_bot_buy)+' vs Sell '+str(n_sell_small-n_bot_sell)
     for i in numpy.arange(0,len(thresholds),1):
         msg=msg+'\n> '+"{:,}".format(thresholds[i])+'$: Buy '+str(sig_buy[i])+' vs Sell '+str(sig_sell[i])
-    msg=msg+'\nTotal: Buy '+"{:,}".format(int(sum(buy_qties)))+' ('+"{:,}".format(total_buy)+'$) vs Sell '+"{:,}".format(int(sum(sell_qties)))+' ('+"{:,}".format(total_sell)+'$)'
+    msg=msg+'\nTotal: Buy '+"{:,}".format(int(sum(buy_qties)))+' ('+"{:,}".format(total_buy)+'$) vs Sell '+"{:,}".format(int(sum(sell_qties)))+' ('+"{:,}".format(total_sell)+'$)'  
+    for minute_length in [30,15,5]:
+        past_time=int(trades[-1]['time'])-minute_length*60*1000 
+        buy_volume=[float(trade['qty']) for trade in trades if trade['isBuyerMaker']==True and int(trade['time'])>=past_time]
+        sell_volume=[float(trade['qty']) for trade in trades if trade['isBuyerMaker']==False and int(trade['time'])>=past_time]
+        total_buy=int(sum(buy_volume))
+        total_sell=int(sum(sell_volume))
+        msg=msg+'\n- Last '+str(minute_length)+' mins: Buy '+"{:,}".format(total_buy)+' vs Sell '+"{:,}".format(total_sell)
     trade_prices=[float(trade['price']) for trade in trades]
     trade_orders=numpy.arange(0,500)
     buy_orders=[i for i in trade_orders if trades[i]['isBuyerMaker']==False]
