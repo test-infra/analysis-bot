@@ -247,8 +247,8 @@ def trade_analysis_500(client,market,opt):
     msg=msg+'\nTotal: Buy '+"{:,}".format(int(sum(buy_qties)))+' ('+"{:,}".format(total_buy)+'$) vs Sell '+"{:,}".format(int(sum(sell_qties)))+' ('+"{:,}".format(total_sell)+'$)'  
     for minute_length in [30,15,5]:
         past_time=int(trades[-1]['time'])-minute_length*60*1000 
-        buy_volume=[float(trade['qty']) for trade in trades if trade['isBuyerMaker']==True and int(trade['time'])>=past_time]
-        sell_volume=[float(trade['qty']) for trade in trades if trade['isBuyerMaker']==False and int(trade['time'])>=past_time]
+        buy_volume=[float(trade['qty']) for trade in trades if trade['isBuyerMaker']==False and int(trade['time'])>=past_time]
+        sell_volume=[float(trade['qty']) for trade in trades if trade['isBuyerMaker']==True and int(trade['time'])>=past_time]
         total_buy=int(sum(buy_volume))
         total_sell=int(sum(sell_volume))
         msg=msg+'\n- Last '+str(minute_length)+' mins: Buy '+"{:,}".format(total_buy)+' vs Sell '+"{:,}".format(total_sell)
