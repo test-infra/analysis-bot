@@ -246,7 +246,7 @@ def trade_analysis_500(client,market,opt):
     msg=msg+'\n~ 1-10$: Buy '+str(n_buy_small-n_bot_buy)+' vs Sell '+str(n_sell_small-n_bot_sell)
     for i in numpy.arange(0,len(thresholds),1):
         msg=msg+'\n> '+"{:,}".format(thresholds[i])+'$: Buy '+str(sig_buy[i])+' vs Sell '+str(sig_sell[i])
-    msg=msg+'\nTotal: Buy '+str(n_buy)+' ('+"{:,}".format(total_buy)+'$) vs Sell '+str(n_sell)+' ('+"{:,}".format(total_sell)+'$)'
+    msg=msg+'\nTotal: Buy '+"{:,}".format(int(sum(buy_qties)))+' ('+"{:,}".format(total_buy)+'$) vs Sell '+"{:,}".format(int(sum(buy_qties)))+' ('+"{:,}".format(total_sell)+'$)'
     trade_prices=[float(trade['price']) for trade in trades]
     trade_orders=numpy.arange(0,500)
     buy_orders=[i for i in trade_orders if trades[i]['isBuyerMaker']==False]
