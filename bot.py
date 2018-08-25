@@ -20,23 +20,13 @@ DB_HOST=os.environ['DB_HOST']
 DB_PASSWORD=os.environ['DB_PASSWORD']
 DB_URL="dbname='"+DB_NAME+"' user='"+DB_USERNAME+"' host='"+DB_HOST+"' password='"+DB_PASSWORD+"'"
 
-try:
-    conn=psycopg2.connect(DB_URL)
-    cur=conn.cursor()
-    cur.execute("SELECT chat_id FROM users")
-    users=cur.fetchall()
-    id_list=[chat_id[0] for chat_id in users]
-    cur.close()
-    conn.close()
-except Exception:
-    conn=psycopg2.connect(DB_URL)
-    cur=conn.cursor()
-    cur.execute("CREATE TABLE users (id serial PRIMARY KEY, chat_id integer)")
-    cur.execute("SELECT chat_id FROM users")
-    users=cur.fetchall()
-    id_list=[chat_id[0] for chat_id in users]
-    cur.close()
-    conn.close()
+conn=psycopg2.connect(DB_URL)
+cur=conn.cursor()
+cur.execute("SELECT chat_id FROM users")
+users=cur.fetchall()
+id_list=[chat_id[0] for chat_id in users]
+cur.close()
+conn.close()
 
 ADMIN_ID=os.environ['ADMIN_ID']
 ADMIN_USERNAME=os.environ['ADMIN_USERNAME']
