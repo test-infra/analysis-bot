@@ -38,7 +38,6 @@ def send_msg(bot,update):
             msg=msg[10:]
             for id_item in id_list:
                 bot.send_message(chat_id=id_item,text=msg,parse_mode=ParseMode.MARKDOWN)
-            bot.send_message(chat_id=ADMIN_ID,text='Message sent to '+str(len(id_list))+' users.',parse_mode=ParseMode.MARKDOWN)
                 
 def t(bot,update,args):
     bot.send_chat_action(chat_id=update.message.chat_id,action=telegram.ChatAction.TYPING)
@@ -48,7 +47,7 @@ def t(bot,update,args):
     else:
         coin_list=args
         opt=0
-    for coinName in coin_list:
+    for coinName in coin_list[:4]:
         market=infolib.getMarket(coinName)
         msg=tradelib.trade_analysis_500(client,market,opt)
         update.message.reply_text(msg,parse_mode=ParseMode.MARKDOWN)
@@ -65,7 +64,7 @@ def a(bot,update,args):
     else:
         num_trades=5000
         coin_list=args
-    for coinName in coin_list:
+    for coinName in coin_list[:4]:
         market=infolib.getMarket(coinName)
         tradelib.trade_msg_h1(client,market,num_trades)
         bot.send_photo(chat_id=update.message.chat_id, photo=open(str(market)+'.png', 'rb'))
