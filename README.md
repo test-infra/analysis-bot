@@ -109,19 +109,22 @@ Developer (Github)
 /t zrx 1
 ```
 ```
-#ZRXBTC: 0.0001138
+#ZRXBTC: 0.00011096
 Transactions statistics (Last 500 trades)
-From 2018-08-17 00:15:34 to 2018-08-17 00:40:52 (UTC)
-~ 0$: Buy 35 vs Sell 10
-~ 1-10$: Buy 22 vs Sell 22
-> 100$: Buy 105 vs Sell 122
-> 200$: Buy 77 vs Sell 79
-> 500$: Buy 32 vs Sell 25
-> 1,000$: Buy 13 vs Sell 15
-> 2,000$: Buy 9 vs Sell 11
-> 5,000$: Buy 1 vs Sell 6
-> 10,000$: Buy 1 vs Sell 1
-Total: Buy 261 (85,760$) vs Sell 239 (121,247$)
+From 2018-08-31 09:39:43 to 2018-08-31 10:36:04 (UTC)
+~ 0$: Buy 49 vs Sell 27
+~ 1-10$: Buy 32 vs Sell 3
+> 100$: Buy 122 vs Sell 102
+> 200$: Buy 94 vs Sell 60
+> 500$: Buy 33 vs Sell 3
+> 1,000$: Buy 5 vs Sell 2
+> 2,000$: Buy 0 vs Sell 1
+> 5,000$: Buy 0 vs Sell 0
+> 10,000$: Buy 0 vs Sell 0
+Total: Buy 68,343 (52,521$) vs Sell 45,714 (35,059$)
+- Last 30 mins: Buy 42,792 vs Sell 16,584
+- Last 15 mins: Buy 22,665 vs Sell 6,965
+- Last 5 mins: Buy 6,644 vs Sell 3,130
 ```
 <img src="img/t_zrx_1.png" width="700">
 
