@@ -47,7 +47,7 @@ def t(bot,update,args):
     else:
         coin_list=args
         opt=0
-    for coinName in coin_list[:4]:
+    for coinName in coin_list:
         market=infolib.getMarket(coinName)
         msg=tradelib.trade_analysis_500(client,market,opt)
         update.message.reply_text(msg,parse_mode=ParseMode.MARKDOWN)
