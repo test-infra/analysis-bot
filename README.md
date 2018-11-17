@@ -126,27 +126,27 @@ Total: Buy 68,343 (52,521$) vs Sell 45,714 (35,059$)
 - Last 15 mins: Buy 22,665 vs Sell 6,965
 - Last 5 mins: Buy 6,644 vs Sell 3,130
 ```
-<img src="img/t_zrx_1.png" width="700">
+<img src="docs/img/t_zrx_1.png" width="700">
 
 ### Order flow
 ```
 /a zrx
 ```
-<img src="img/a_zrx_1h.jpg" width="700">
-<img src="img/a_zrx_30m.jpg" width="700">
+<img src="docs/img/a_zrx_1h.jpg" width="700">
+<img src="docs/img/a_zrx_30m.jpg" width="700">
 
 ### Cryptoasset indexes
 ```
 /m
 ```
-<img src="img/bletchley_index.jpg" width="700">
-<img src="img/crix_index.jpg" width="700">
+<img src="docs/img/bletchley_index.jpg" width="700">
+<img src="docs/img/crix_index.jpg" width="700">
 
 ### Trading sessions
 ```
 /h
 ```
-<img src="img/h.png" width="700">
+<img src="docs/img/h.png" width="700">
 
 ## Licence
 MIT
