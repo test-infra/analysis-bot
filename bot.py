@@ -21,7 +21,6 @@ MANUAL_TEXT = """@trading\_analysis\_bot is a Telegram chatbot for data-driven a
  Transactions volume versus price statistics. 
  The argument <time-frame> and <num-day> can be omitted. 
  Examples: /t qtumusdt bttbnb or /t bttbtc xlmusdt 4h 30.
- - /v - Low daily sell volume over 1 month.
  - /m - Market indexes.
  - /h - Trading sesions.
  *Supports*
