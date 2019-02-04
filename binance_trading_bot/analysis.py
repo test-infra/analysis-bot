@@ -193,6 +193,7 @@ def analysis_visual(client, market, TIME_FRAME='1d', TIME_FRAME_DURATION=30):
     plt.savefig(market+'.png',bbox_inches='tight')
     
 def scalp_analysis(client, market):
+    ticker = client.get_ticker(symbol=market)
     candles = get_candles(client, 
                           market, 
                           timeFrame='5m', 
@@ -200,9 +201,12 @@ def scalp_analysis(client, market):
     result = pd.DataFrame(columns=['Duration', ': Buy ', ', Sell '])
     for i in [2, 1, 0]:
         result.loc[2-i] = [str(5*(i+2**i))+' mins ago', 
-                  ("%.2f" % candles['buyQuoteVolume'].iloc[-max(3*i, 1):].sum()),
-                  ("%.2f" % candles['sellQuoteVolume'].iloc[-max(3*i, 1):].sum())]
-    msg = '*'+market+'*'
+                  "{0:,.2f}".format(candles['buyQuoteVolume'].iloc[-max(3*i, 1):].sum()),
+                  "{0:,.2f}".format(candles['sellQuoteVolume'].iloc[-max(3*i, 1):].sum())]
+    msg = '*'+market+'* Price: '+ \
+    ticker['lastPrice']+' Change: '+\
+    ticker['priceChangePercent']+'% Vol: '+\
+    ticker['quoteVolume']
     for i in range(len(result)):
         msg = msg+'\n'+result[result.columns[0]].loc[i]+\
         result.columns[1]+'*'+result[result.columns[1]].loc[i]+'*'+\
