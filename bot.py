@@ -3,8 +3,6 @@ import telegram
 from telegram import ParseMode
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from binance.client import Client
-import numpy as np
-import pandas as pd
 from binance_trading_bot import utilities, analysis, visual
 
 MANUAL_TEXT = """@trading\_analysis\_bot is a Telegram chatbot for data-driven analytics of crypto-market on Binance.
@@ -43,6 +41,8 @@ def t(bot,update,args):
                          action=telegram.ChatAction.TYPING)
     for market in args:
         market = market.upper()
+        if len(market)<=4:
+            market = market+'BTC'
         msg = analysis.scalp_analysis(client, market)
         update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
         try:
