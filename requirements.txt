@@ -3,5 +3,4 @@ python-binance
 numpy
 datetime
 matplotlib
-pandas
 seaborn
