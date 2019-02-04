@@ -146,7 +146,7 @@ def analysis_visual(client, market, TIME_FRAME = '1d', TIME_FRAME_DURATION = 30)
     
     f,(ax1,ax2)=plt.subplots(2,1,gridspec_kw={'height_ratios':[1,1]})
     f.set_size_inches(20,15)
-    ax1.set_title('Market: '+market+' Time-frame: '+TIME_FRAME+' Duration: '+str(TIME_FRAME_DURATION)+' [day]', fontsize=25, y=1.03, loc='left')
+    ax1.set_title('Market: '+market+' Time-frame: '+TIME_FRAME+' Duration: '+str(TIME_FRAME_DURATION)+'d', fontsize=25, y=1.03, loc='left')
     ax1p=ax1.twiny()
     ax1p.barh(volumeAnalysis['price'],
               volumeAnalysis['buy_volume']+volumeAnalysis['sell_volume'],
@@ -201,7 +201,7 @@ def analysis_visual(client, market, TIME_FRAME = '1d', TIME_FRAME_DURATION = 30)
     ax2.set_xticks([])
     ax2.set_xlim(.5, len(candles))
     ax2.get_yaxis().set_label_coords(-0.075,0.5) 
-    ax2.set_ylabel("Buy versus Sell Volume",fontsize=20)
+    ax2.set_ylabel("Buy versus Sell Quote Volume",fontsize=20)
     ax2.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
     f.tight_layout()
     plt.savefig(market+'.png',bbox_inches='tight')
