@@ -20,7 +20,8 @@ MANUAL_TEXT = """@trading\_analysis\_bot is a Telegram chatbot for data-driven a
  - /t <market> <time-frame> <num-day> 
  Transactions volume versus price statistics. 
  The argument <time-frame> and <num-day> can be omitted. 
- Examples: /t qtumusdt bttbnb or /t bttbtc xlmusdt 4h 30
+ Examples: /t qtumusdt bttbnb or /t bttbtc xlmusdt 4h 30.
+ - /v - Low daily sell volume over 1 month.
  - /m - Market indexes.
  - /h - Trading sesions.
  *Supports*
@@ -56,6 +57,17 @@ def t(bot,update,args):
                            photo=open(market+'.png', 'rb'))
         except Exception:
             pass
+        
+def v(bot,update):
+    bot.send_chat_action(chat_id=update.message.chat_id, 
+                         action=telegram.ChatAction.TYPING)
+    marketList = utilities.get_market_list(client)
+    analysis.daily_sell_volume(client, 
+                               marketList, 
+                               DAILY_SELL_VOLUME_THRESHOLD=200,
+                               TIME_FRAME_DURATION=30)
+    bot.send_photo(chat_id=update.message.chat_id, 
+                   photo=open('daily_sell_volume.png', 'rb'))
 
 def manual(bot,update):
     bot.send_message(chat_id=update.message.chat_id, 
@@ -69,6 +81,7 @@ def main():
     dp.add_handler(CommandHandler("start", manual))
     dp.add_handler(CommandHandler("help", manual))
     dp.add_handler(CommandHandler("t", t, pass_args=True))
+    dp.add_handler(CommandHandler("v", v))
     updater.start_polling()
     updater.idle()
 
