@@ -26,9 +26,9 @@ MANUAL_TEXT = """@trading\_analysis\_bot is a Telegram chatbot for data-driven a
  *Supports*
  If you don't have an account yet please use the these links to register to [Binance](https://www.binance.com/?ref=13339920) or [Huobi](https://www.huobi.br.com/en-us/topic/invited/?invite_code=x93k3).
  Tipjar:
- - BTC: 1DrEMhMP5rAytKyKXRzc6szTcUX8bZzZgq
- - ETH: 0x3915D216f9Fc6ec08f956555e84385513dE5f214
- - LTC: LX8GJkGTZFmAA7puCyVp48333iQdCN6vca
+ - BTC: [1DrEMhMP5rAytKyKXRzc6szTcUX8bZzZgq](1DrEMhMP5rAytKyKXRzc6szTcUX8bZzZgq)
+ - ETH: [0x3915D216f9Fc6ec08f956555e84385513dE5f214](0x3915D216f9Fc6ec08f956555e84385513dE5f214)
+ - LTC: [LX8GJkGTZFmAA7puCyVp48333iQdCN6vca](LX8GJkGTZFmAA7puCyVp48333iQdCN6vca)
  *Contact*
  vanvuong.trinh@gmail.com"""
 
