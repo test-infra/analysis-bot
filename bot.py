@@ -22,14 +22,12 @@ def t(bot,update,args):
                          action=telegram.ChatAction.TYPING)
     coin = args
     market = coin.upper()+'BTC'
+    update.message.reply_text(market, parse_mode=ParseMode.MARKDOWN)
     for i in range(len(TIME_FRAME_LIST)):
-        print(TIME_FRAME_LIST[i])
         analysis.analysis_visual(client, 
                                  market, 
                                  TIME_FRAME = TIME_FRAME_LIST[i], 
                                  TIME_FRAME_DURATION = TIME_FRAME_DURATION_LIST[i])
-        msg = market
-        update.message.reply_text(msg,parse_mode=ParseMode.MARKDOWN)
         bot.send_photo(chat_id=update.message.chat_id, 
                        photo=open(market+'.png', 'rb'))
 
