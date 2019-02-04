@@ -46,8 +46,8 @@ def t(bot,update,args):
         msg = analysis.scalp_analysis(client, market)
         update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
         try:
-            TIME_FRAME = args[1]
-            TIME_FRAME_DURATION = int(args[2])
+            TIME_FRAME = args[-2]
+            TIME_FRAME_DURATION = int(args[-1])
             analysis.analysis_visual(client, 
                                      market, 
                                      TIME_FRAME, 
