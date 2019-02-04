@@ -10,9 +10,8 @@
 
 - Telegram library: python-telegram-bot
 - Exchange library: python-binance
-- Computational libraries: numpy, pandas, TA-lib
+- Computational libraries: numpy, pandas
 - Visualization library: matplotlib
-- Database library: psycopg2
 
 ## Features
 
@@ -29,7 +28,6 @@
 
 ```
 pip install -r requirements.txt
-pip install TA-lib
 ```
 
 ```
@@ -52,7 +50,6 @@ python bot.py
 
 ```
 heroku create trading-analysis-bot --buildpack heroku/python
-heroku buildpacks:add --index 2 https://github.com/numrut/heroku-buildpack-python-talib
 heroku config:set TELEGRAM_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 heroku config:set BINANCE_SECRET_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX 
 heroku config:set BINANCE_API_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
