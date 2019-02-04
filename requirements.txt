@@ -3,4 +3,4 @@ python-binance
 numpy
 datetime
 matplotlib
-psycopg2
+pandas
