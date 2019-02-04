@@ -216,7 +216,7 @@ def scalp_analysis(client, market):
     result = pd.DataFrame(columns=['Duration', ' Trades ', ' Buy ', ' Sell '])
     for i in [0, 1, 2]:
         result.loc[i] = [str(5*(i+2**i))+' mins ago:', 
-                  ("%.2f" % candles['n_trades'].iloc[-max(3*i, 1):].sum()),
+                  ("%d" % candles['n_trades'].iloc[-max(3*i, 1):].sum()),
                   ("%.2f" % candles['buyQuoteVolume'].iloc[-max(3*i, 1):].sum()),
                   ("%.2f" % candles['sellQuoteVolume'].iloc[-max(3*i, 1):].sum())]
     msg = market
