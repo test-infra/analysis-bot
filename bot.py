@@ -28,6 +28,8 @@ def t(bot,update,args):
                                  market, 
                                  TIME_FRAME = TIME_FRAME_LIST[i], 
                                  TIME_FRAME_DURATION = TIME_FRAME_DURATION_LIST[i])
+        msg = market
+        update.message.reply_text(msg,parse_mode=ParseMode.MARKDOWN)
         bot.send_photo(chat_id=update.message.chat_id, 
                        photo=open(market+'.png', 'rb'))
 
