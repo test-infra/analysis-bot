@@ -95,7 +95,7 @@ def daily_sell_volume(client, marketList):
     fig, ax = plt.subplots(figsize=(30,100))
     analysisResult = analysisResult.sort_values(analysisResult.columns[-1], ascending=True)      
     sns.heatmap(analysisResult.head(100), linewidths=.5, ax=ax, cbar=False)
-    plt.savefig('img/daily_sell_volume.png', bbox_inches='tight', format='png', dpi=300)
+    plt.savefig('daily_sell_volume.png', bbox_inches='tight', format='png', dpi=300)
     
     return analysisResult
 
@@ -203,7 +203,7 @@ def analysis_visual(client, market, TIME_FRAME = '1d', TIME_FRAME_DURATION = 30)
     ax2.set_ylabel("Buy versus Sell Volume",fontsize=20)
     ax2.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
     f.tight_layout()
-    plt.savefig('img/'+market+'.png',bbox_inches='tight')
+    plt.savefig(market+'.png',bbox_inches='tight')
 
     
     

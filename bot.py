@@ -28,7 +28,7 @@ def t(bot,update,args):
                                  TIME_FRAME = TIME_FRAME_LIST[i], 
                                  TIME_FRAME_DURATION = TIME_FRAME_DURATION_LIST[i])
         bot.send_photo(chat_id=update.message.chat_id, 
-                       photo=open('img/'+str(market)+'.png', 'rb'))
+                       photo=open(market+'.png', 'rb'))
 
 def manual(bot,update):
     bot.send_message(chat_id=update.message.chat_id, 
