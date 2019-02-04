@@ -206,8 +206,8 @@ def scalp_analysis(client, market):
     msg = '#'+market+\
     '\nPrice: '+ticker['lastPrice']+\
     ' Change: '+ticker['priceChangePercent']+\
-    '% Vol: '+ticker['quoteVolume']+\
-    '*Transaction statistics*'
+    '% Vol: '+"{0:,.2f}".format(float(ticker['quoteVolume']))+\
+    '\n*Transaction statistics*'
     for i in range(len(result)):
         msg = msg+'\n'+result[result.columns[0]].loc[i]+\
         result.columns[1]+'*'+result[result.columns[1]].loc[i]+'*'+\
