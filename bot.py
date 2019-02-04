@@ -57,17 +57,6 @@ def t(bot,update,args):
                            photo=open(market+'.png', 'rb'))
         except Exception:
             pass
-        
-def v(bot,update):
-    bot.send_chat_action(chat_id=update.message.chat_id, 
-                         action=telegram.ChatAction.TYPING)
-    marketList = utilities.get_market_list(client)
-    analysis.daily_sell_volume(client, 
-                               marketList, 
-                               DAILY_SELL_VOLUME_THRESHOLD=200,
-                               TIME_FRAME_DURATION=30)
-    bot.send_photo(chat_id=update.message.chat_id, 
-                   photo=open('daily_sell_volume.png', 'rb'))
 
 def manual(bot,update):
     bot.send_message(chat_id=update.message.chat_id, 
@@ -81,7 +70,6 @@ def main():
     dp.add_handler(CommandHandler("start", manual))
     dp.add_handler(CommandHandler("help", manual))
     dp.add_handler(CommandHandler("t", t, pass_args=True))
-    dp.add_handler(CommandHandler("v", v))
     updater.start_polling()
     updater.idle()
 
