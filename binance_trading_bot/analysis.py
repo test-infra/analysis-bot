@@ -205,8 +205,8 @@ def scalp_analysis(client, market):
     msg = market
     for i in range(len(result)):
         msg = msg+'\n'+result[result.columns[0]].loc[i]+\
-        result.columns[1]+result[result.columns[1]].loc[i]+\
-        result.columns[2]+result[result.columns[2]].loc[i]
+        result.columns[1]+'*'+result[result.columns[1]].loc[i]+'*'\
+        result.columns[2]+'*'+result[result.columns[2]].loc[i]+'*'
     return msg
 
     
