@@ -203,10 +203,11 @@ def scalp_analysis(client, market):
         result.loc[2-i] = [str(5*(i+2**i))+' mins ago', 
                   "{0:,.2f}".format(candles['buyQuoteVolume'].iloc[-max(3*i, 1):].sum()),
                   "{0:,.2f}".format(candles['sellQuoteVolume'].iloc[-max(3*i, 1):].sum())]
-    msg = '*'+market+'* Price: '+ \
-    ticker['lastPrice']+' Change: '+\
-    ticker['priceChangePercent']+'% Vol: '+\
-    ticker['quoteVolume']
+    msg = '#'+market+\
+    '\nPrice: '+ticker['lastPrice']+\
+    ' Change: '+ticker['priceChangePercent']+\
+    '% Vol: '+ticker['quoteVolume']+\
+    '*Transaction statistics*'
     for i in range(len(result)):
         msg = msg+'\n'+result[result.columns[0]].loc[i]+\
         result.columns[1]+'*'+result[result.columns[1]].loc[i]+'*'+\
