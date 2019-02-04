@@ -24,15 +24,12 @@ def t(bot,update,args):
     market = coin.upper()+'BTC'
     update.message.reply_text(market, parse_mode=ParseMode.MARKDOWN)
     for i in range(len(TIME_FRAME_LIST)):
-        try:
-            analysis.analysis_visual(client, 
-                                     market, 
-                                     TIME_FRAME = TIME_FRAME_LIST[i], 
-                                     TIME_FRAME_DURATION = TIME_FRAME_DURATION_LIST[i])
-            bot.send_photo(chat_id=update.message.chat_id, 
-                           photo=open(market+'.png', 'rb'))
-        except Exception:
-            pass
+        analysis.analysis_visual(client, 
+                                 market, 
+                                 TIME_FRAME = TIME_FRAME_LIST[i], 
+                                 TIME_FRAME_DURATION = TIME_FRAME_DURATION_LIST[i])
+        bot.send_photo(chat_id=update.message.chat_id, 
+                       photo=open(market+'.png', 'rb'))
 
 def manual(bot,update):
     bot.send_message(chat_id=update.message.chat_id, 

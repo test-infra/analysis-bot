@@ -2,3 +2,4 @@ __pycache__
 git.sh
 deploy_local_win.bat
 deploy_heroku.bat
+update_heroku.bat
