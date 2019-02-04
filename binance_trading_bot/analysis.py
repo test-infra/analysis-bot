@@ -213,18 +213,18 @@ def scalp_analysis(client, market):
                           market, 
                           timeFrame='5m', 
                           timeDuration='30 minutes ago utc')
-    result = pd.DataFrame(columns=['Duration', ' Trades ', ' Buy ', ' Sell '])
+    result = pd.DataFrame(columns=['Duration', ' Buy ', ' Sell ', ' Trades '])
     for i in [0, 1, 2]:
         result.loc[i] = [str(5*(i+2**i))+' mins ago:', 
-                  ("%d" % candles['n_trades'].iloc[-max(3*i, 1):].sum()),
                   ("%.2f" % candles['buyQuoteVolume'].iloc[-max(3*i, 1):].sum()),
-                  ("%.2f" % candles['sellQuoteVolume'].iloc[-max(3*i, 1):].sum())]
+                  ("%.2f" % candles['sellQuoteVolume'].iloc[-max(3*i, 1):].sum()),
+                  ("%d" % candles['n_trades'].iloc[-max(3*i, 1):].sum())]
     msg = market
-    for i in [0, 1, 2]:
+    for i in range(len(result)):
         msg = msg+'\n'+result['Duration'].loc[i]+\
-        result.columns[1]+result[' Trades '].loc[i]+\
-        result.columns[2]+result[' Buy '].loc[i]+\
-        result.columns[3]+result[' Sell '].loc[i]
+        result.columns[1]+result[result.columns[1]].loc[i]+\
+        result.columns[2]+result[result.columns[2]].loc[i]+\
+        result.columns[3]+result[result.columns[3]].loc[i]
     return msg
 
     
