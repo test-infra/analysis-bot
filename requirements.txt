@@ -4,3 +4,4 @@ numpy
 datetime
 matplotlib
 seaborn
+pandas
