@@ -66,7 +66,7 @@ def get_order_book(client, market):
 
 def daily_sell_volume(client, 
                       marketList, 
-                      DAILY_SELL_VOLUME_THRESHOLD=200,
+                      DAILY_SELL_VOLUME_THRESHOLD=30,
                       TIME_FRAME_DURATION=30):
     analysisResult = marketList[(marketList['tradedMoney']<=DAILY_SELL_VOLUME_THRESHOLD)]
     analysisResult = analysisResult[(analysisResult['tradedMoney']>0)]
@@ -86,9 +86,9 @@ def daily_sell_volume(client,
     analysisResult = analysisResult.drop(columns='tradedMoney')
     analysisResult = analysisResult.set_index('symbol')
     analysisResult = analysisResult.sort_values(analysisResult.columns[-1], ascending=True)    
-    fig, ax = plt.subplots(figsize=(30,50))
+    fig, ax = plt.subplots(figsize=(30,20))
     analysisResult = analysisResult.sort_values(analysisResult.columns[-1], ascending=True)      
-    sns.heatmap(analysisResult.head(50), linewidths=.5, ax=ax, cbar=False)
+    sns.heatmap(analysisResult.head(20), linewidths=.5, ax=ax, cbar=False)
     plt.savefig('daily_sell_volume.png', bbox_inches='tight', format='png', dpi=300) 
     return analysisResult
 
