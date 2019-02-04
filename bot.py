@@ -7,7 +7,33 @@ import numpy as np
 import pandas as pd
 from binance_trading_bot import utilities, analysis, visual
 
-MANUAL_TEXT = "@trading\_analysis\_bot is a Telegram chatbot for data-driven analytics of crypto-market with technical indicators, social sentiment, developer activities and metrics related to crossed-network on-chain transactions. The aim is to assist traders on Binance exchange.\n*Features*\n- Technical indicators: RSI, MA, BB, etc\n- Order flow: Buy vs sell, Volume profile, Limit orderbook\n- Cryptoasset indexes: Bletchley, Bitwise, CRIX\n- Cryptoasset metrics: TX vol, NVT ratio, num active addresses, num transactions\n- Social sentiment and developer activities: Twitter, Reddit, Facebook, GitHub\n- Trading sessions: New York, London, Tokyo, Sydney\n- Customized notifications: Bitfinex BTCUSD abnormal volume\n*Commands*\n- /a <coin-name-1> <market-name-2> <coin-name-3> <number-of-recent-trades> - Transactions volume versus price statistics. The argument <number-of-recent-trades> can be 500, 1000, 1500, 2000, 2500, 5000, 7500, 10000, 12500, 15000, 17500, 20000, 25000, 30000, 35000, 40000, 45000, 50000 (can be omitted). Examples: /a qtumusdt hot bcn or /a hot npxs btcusdt 20000.\n- /t <coin-name-1> <market-2> <coin-name-3> <chart-flag> - Recent trades summary. If <chart-flag>=1, the volume vs price plot will be provided (can be omitted). Examples: /t hot bat mco 1 or /t npxs btcusdt.\n- /i <coin-name> - Coin information. Examples: /i hot or /i npxs.\n- /m - Market indexes.\n- /h - Trading sesions.\n*Supports*\nIf you don't have a crypto-trading account yet please use the these links to register to [Binance](https://www.binance.com/?ref=13339920) or [Huobi](https://www.huobi.br.com/en-us/topic/invited/?invite_code=x93k3).\nTipjar:\n- BTC: 1DrEMhMP5rAytKyKXRzc6szTcUX8bZzZgq\n- ETH: 0x3915D216f9Fc6ec08f956555e84385513dE5f214\n- LTC: LX8GJkGTZFmAA7puCyVp48333iQdCN6vca\n*Contact*\nvanvuong.trinh@gmail.com"
+MANUAL_TEXT = """@trading\_analysis\_bot is a Telegram chatbot for data-driven
+ analytics of crypto-market with technical indicators, social sentiment, 
+ developer activities and metrics related to crossed-network on-chain 
+ transactions. The aim is to assist traders on Binance exchange.
+ \n*Features*
+ \n- Technical indicators: MA, BB, Ichimoku, VRVP ...
+ \n- Order flow: Buy vs sell volume, Trades, Limit order book
+ \n- Indexes: Bletchley, Bitwise, CRIX
+ \n- Metrics: TX vol, NVT ratio, num active addresses, num transactions
+ \n- Sentiment and development: Twitter, Reddit, Facebook, GitHub
+ \n- Trading sessions: New York, London, Tokyo, Sydney
+ \n- Customized notifications
+ \n*Commands*\n- /t <market-name-1> <market-name-2> <time-frame> <num-day> - 
+ Transactions volume versus price statistics. 
+ The argument <time-frame> and <num-day> can be omitted. 
+ Examples: /t qtumusdt bttbnb or /a bttbtc xlmusdt 4h 30
+ \n- /m - Market indexes.
+ \n- /h - Trading sesions.
+ \n*Supports*
+ \nIf you don't have an account yet please use the these links to register to
+ [Binance](https://www.binance.com/?ref=13339920) or
+ [Huobi](https://www.huobi.br.com/en-us/topic/invited/?invite_code=x93k3).
+ \nTipjar:
+ \n- BTC: 1DrEMhMP5rAytKyKXRzc6szTcUX8bZzZgq
+ \n- ETH: 0x3915D216f9Fc6ec08f956555e84385513dE5f214
+ \n- LTC: LX8GJkGTZFmAA7puCyVp48333iQdCN6vca
+ \n*Contact*\nvanvuong.trinh@gmail.com"""
 
 TELEGRAM_TOKEN = os.environ['TELEGRAM_TOKEN']
 BINANCE_SECRET_KEY = os.environ['BINANCE_SECRET_KEY']
