@@ -205,8 +205,8 @@ def scalp_analysis(client, market):
                   "{0:,.2f}".format(candles['sellQuoteVolume'].iloc[-max(3*i, 1):].sum())]
     msg = '#'+market+\
     '\nP: '+ticker['lastPrice']+\
-    ' ('+ticker['priceChangePercent']+\
-    '%) V: '+"{0:,.2f}".format(float(ticker['quoteVolume']))
+    ' VWAP: '+ticker['weightedAvgPrice']+\
+    ' V: '+"{0:,.2f}".format(float(ticker['quoteVolume']))
     for i in range(len(result)):
         msg = msg+'\n'+result[result.columns[0]].loc[i]+\
         result.columns[1]+'*'+result[result.columns[1]].loc[i]+'*'+\
