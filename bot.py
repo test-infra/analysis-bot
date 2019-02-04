@@ -11,9 +11,13 @@ MANUAL_TEXT = "@trading\_analysis\_bot is a Telegram chatbot for data-driven ana
 TIME_FRAME_LIST = ['15m', '30m', '1h', '4h', '1d', '1w']
 TIME_FRAME_DURATION_LIST = [1, 2, 3, 7, 30, 60]
 
-TELEGRAM_TOKEN = os.environ['TELEGRAM_TOKEN']
-BINANCE_SECRET_KEY = os.environ['BINANCE_SECRET_KEY']
-BINANCE_API_KEY = os.environ['BINANCE_API_KEY']
+#TELEGRAM_TOKEN = os.environ['TELEGRAM_TOKEN']
+#BINANCE_SECRET_KEY = os.environ['BINANCE_SECRET_KEY']
+#BINANCE_API_KEY = os.environ['BINANCE_API_KEY']
+
+TELEGRAM_TOKEN = '795961769:AAEFGlpsZefPCZhVbOfCBRFJM4PW_FSOEEU'
+BINANCE_SECRET_KEY = 'oWTZlVE4RDnBU2xekaqLMPKPaUD38X2tXBt7aXavHi3Hzzrg0OL9e9HLApt6k1eD' 
+BINANCE_API_KEY = 'JdFhP0w24d323cEqozsvPJB4eYABjnu5d3N8Jq67sajNQYcOTqsknuvghZva73jo'
 
 client = Client(BINANCE_API_KEY, BINANCE_SECRET_KEY)
 
@@ -23,6 +27,7 @@ def t(bot,update,args):
     coin = args
     market = coin.upper()+'BTC'
     for i in range(len(TIME_FRAME_LIST)):
+        print(TIME_FRAME_LIST[i])
         analysis.analysis_visual(client, 
                                  market, 
                                  TIME_FRAME = TIME_FRAME_LIST[i], 
