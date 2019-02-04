@@ -47,36 +47,30 @@ def get_candles(client, market, timeFrame, timeDuration):
     return candles
 
 def get_order_book(client, market):
-
     bids = pd.DataFrame(client.get_order_book(symbol=market)['bids']).drop(columns=2)
     bids.columns = ['price', 'baseQty']
     bids = bids.apply(pd.to_numeric, errors='coerce')
     bids['quoteValue'] = bids['price']*bids['baseQty']
     bids['cumsum'] = bids['quoteValue'].cumsum()
     bids = bids.drop(columns=['baseQty', 'quoteValue'])
-    
     asks = pd.DataFrame(client.get_order_book(symbol=market)['asks']).drop(columns=2)
     asks.columns = ['price', 'baseQty']
     asks = asks.apply(pd.to_numeric, errors='coerce')
     asks['quoteValue'] = asks['price']*asks['baseQty']
     asks['cumsum'] = asks['quoteValue'].cumsum()
     asks = asks.drop(columns=['baseQty', 'quoteValue'])
-    
     lob = bids.append(asks, ignore_index=True)
     lob = lob.sort_values('price', ascending=True)
     lob.columns = ['price', time.ctime()]
-    
     return lob
 
 def daily_sell_volume(client, 
                       marketList, 
                       DAILY_SELL_VOLUME_THRESHOLD=200,
                       TIME_FRAME_DURATION=30):
-
     analysisResult = marketList[(marketList['tradedMoney']<=DAILY_SELL_VOLUME_THRESHOLD)]
     analysisResult = analysisResult[(analysisResult['tradedMoney']>0)]
     analysisResult = analysisResult.reset_index(drop=True)
-    
     sell_volume_matrix = np.zeros((len(analysisResult['symbol']), TIME_FRAME_DURATION))
     for market_index in range(len(analysisResult['symbol'])):
         candles = get_candles(client, 
@@ -86,34 +80,27 @@ def daily_sell_volume(client,
         for time_index in range(TIME_FRAME_DURATION):
             sell_volume_matrix.itemset((market_index, time_index),
                                        candles['sellQuoteVolume'][time_index])
-    
     for time_index in range(TIME_FRAME_DURATION):
         ts = candles['open_time'][time_index]
         analysisResult[datetime.utcfromtimestamp(ts/1000).strftime('%Y-%m-%d')] = sell_volume_matrix[:,time_index]
     analysisResult = analysisResult.drop(columns='tradedMoney')
     analysisResult = analysisResult.set_index('symbol')
     analysisResult = analysisResult.sort_values(analysisResult.columns[-1], ascending=True)    
-    
     fig, ax = plt.subplots(figsize=(30,50))
     analysisResult = analysisResult.sort_values(analysisResult.columns[-1], ascending=True)      
     sns.heatmap(analysisResult.head(50), linewidths=.5, ax=ax, cbar=False)
-    plt.savefig('daily_sell_volume.png', bbox_inches='tight', format='png', dpi=300)
-    
+    plt.savefig('daily_sell_volume.png', bbox_inches='tight', format='png', dpi=300) 
     return analysisResult
 
 def volume_analysis(client, market, TIME_FRAME_DURATION=28):
-    
     NUM_PRICE_STEP = 20
-    
     candles = get_candles(client, 
                           market,
                           '1h', 
                           str(TIME_FRAME_DURATION)+' days ago UTC')
-    
     priceMin = candles['close'].min()
     priceMax = candles['close'].max()
     priceStep = (priceMax-priceMin)/NUM_PRICE_STEP
-    
     volumeAnalysis = pd.DataFrame(index=np.arange(NUM_PRICE_STEP), 
                                   columns=['price_min', 'price_max', 
                                            'price', 
@@ -135,17 +122,14 @@ def volume_analysis(client, market, TIME_FRAME_DURATION=28):
          [volumeAnalysis['price_min'][i]<=candles['close']]\
          [candles['close']<=volumeAnalysis['price_max'][i]]['sellQuoteVolume']) \
     for i in np.arange(NUM_PRICE_STEP)]
-    
     return volumeAnalysis
 
 def analysis_visual(client, market, TIME_FRAME='1d', TIME_FRAME_DURATION=30):
-    
     candles = get_candles(client, 
                           market,
                           TIME_FRAME, 
                           str(TIME_FRAME_DURATION)+' days ago UTC')
     volumeAnalysis = volume_analysis(client, market, TIME_FRAME_DURATION)
-    
     f,(ax1,ax2)=plt.subplots(2,1,gridspec_kw={'height_ratios':[1,1]})
     f.set_size_inches(20,15)
     ax1.set_title('Market: '+market+' Frame: '+TIME_FRAME+' Duration: '+str(TIME_FRAME_DURATION)+'d', fontsize=30, y=1.03, loc='left')
