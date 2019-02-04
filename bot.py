@@ -19,18 +19,20 @@ def t(bot,update,args):
     bot.send_chat_action(chat_id=update.message.chat_id, 
                          action=telegram.ChatAction.TYPING)
     market = args[0].upper()
-#    update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
+    msg = analysis.scalp_analysis(client, market)
+    update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
     try:
         TIME_FRAME = args[1]
         TIME_FRAME_DURATION = int(args[2])
-        analysis.analysis_visual(client, 
-                                 market, 
-                                 TIME_FRAME, 
-                                 TIME_FRAME_DURATION)
-        bot.send_photo(chat_id=update.message.chat_id, 
-                       photo=open(market+'.png', 'rb'))
     except Exception:
-        pass
+        TIME_FRAME = '1d'
+        TIME_FRAME_DURATION = 30
+    analysis.analysis_visual(client, 
+                             market, 
+                             TIME_FRAME, 
+                             TIME_FRAME_DURATION)
+    bot.send_photo(chat_id=update.message.chat_id, 
+                   photo=open(market+'.png', 'rb'))
 
 def manual(bot,update):
     bot.send_message(chat_id=update.message.chat_id, 

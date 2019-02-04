@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 plt.style.use('classic')
 from matplotlib.ticker import FormatStrFormatter
 
-def get_trades(client, market, timeFrame, timeDuration):
+def get_trades(client, market, timeDuration, timeFrame):
     klines = client.get_historical_klines(symbol=market, 
                                           interval=timeFrame, 
                                           start_str=timeDuration)
@@ -68,13 +68,15 @@ def get_order_book(client, market):
     
     return lob
 
-def daily_sell_volume(client, marketList):
+def daily_sell_volume(client, 
+                      marketList, 
+                      DAILY_SELL_VOLUME_THRESHOLD=200,
+                      TIME_FRAME_DURATION=30):
 
-    analysisResult = marketList[(marketList['tradedMoney']<=200)]
+    analysisResult = marketList[(marketList['tradedMoney']<=DAILY_SELL_VOLUME_THRESHOLD)]
     analysisResult = analysisResult[(analysisResult['tradedMoney']>0)]
     analysisResult = analysisResult.reset_index(drop=True)
     
-    TIME_FRAME_DURATION = 30
     sell_volume_matrix = np.zeros((len(analysisResult['symbol']), TIME_FRAME_DURATION))
     for market_index in range(len(analysisResult['symbol'])):
         candles = get_candles(client, 
@@ -92,14 +94,14 @@ def daily_sell_volume(client, marketList):
     analysisResult = analysisResult.set_index('symbol')
     analysisResult = analysisResult.sort_values(analysisResult.columns[-1], ascending=True)    
     
-    fig, ax = plt.subplots(figsize=(30,100))
+    fig, ax = plt.subplots(figsize=(30,50))
     analysisResult = analysisResult.sort_values(analysisResult.columns[-1], ascending=True)      
-    sns.heatmap(analysisResult.head(100), linewidths=.5, ax=ax, cbar=False)
+    sns.heatmap(analysisResult.head(50), linewidths=.5, ax=ax, cbar=False)
     plt.savefig('daily_sell_volume.png', bbox_inches='tight', format='png', dpi=300)
     
     return analysisResult
 
-def volume_analysis(client, market, TIME_FRAME_DURATION = 28):
+def volume_analysis(client, market, TIME_FRAME_DURATION=28):
     
     NUM_PRICE_STEP = 20
     
@@ -136,7 +138,7 @@ def volume_analysis(client, market, TIME_FRAME_DURATION = 28):
     
     return volumeAnalysis
 
-def analysis_visual(client, market, TIME_FRAME = '1d', TIME_FRAME_DURATION = 30):
+def analysis_visual(client, market, TIME_FRAME='1d', TIME_FRAME_DURATION=30):
     
     candles = get_candles(client, 
                           market,
@@ -205,6 +207,25 @@ def analysis_visual(client, market, TIME_FRAME = '1d', TIME_FRAME_DURATION = 30)
     ax2.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
     f.tight_layout()
     plt.savefig(market+'.png',bbox_inches='tight')
+    
+def scalp_analysis(client, market):
+    candles = get_candles(client, 
+                          market, 
+                          timeFrame='5m', 
+                          timeDuration='30 minutes ago utc')
+    result = pd.DataFrame(columns=['Duration', ' Trades ', ' Buy ', ' Sell '])
+    for i in [0, 1, 2]:
+        result.loc[i] = [str(5*(i+2**i))+' mins ago:', 
+                  ("%.2f" % candles['n_trades'].iloc[-max(3*i, 1):].sum()),
+                  ("%.2f" % candles['buyQuoteVolume'].iloc[-max(3*i, 1):].sum()),
+                  ("%.2f" % candles['sellQuoteVolume'].iloc[-max(3*i, 1):].sum())]
+    msg = market
+    for i in [0, 1, 2]:
+        msg = msg+'\n'+result['Duration'].loc[i]+\
+        result.columns[1]+result[' Trades '].loc[i]+\
+        result.columns[2]+result[' Buy '].loc[i]+\
+        result.columns[3]+result[' Sell '].loc[i]
+    return msg
 
     
     
