@@ -1,61 +1,44 @@
-import os,psycopg2
-
+import os
 import telegram
 from telegram import ParseMode
-from telegram.ext import Updater,CommandHandler,MessageHandler,Filters
-
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from binance.client import Client
+import numpy as np
+import pandas as pd
+from binance_trading_bot import utilities, analysis, visual
+from config import *
 
-import infolib,tradelib,indexlib,misclib
+TELEGRAM_TOKEN = os.environ['TELEGRAM_TOKEN']
+BINANCE_SECRET_KEY = os.environ['BINANCE_SECRET_KEY']
+BINANCE_API_KEY = os.environ['BINANCE_API_KEY']
 
-TOKEN=os.environ['TELEGRAM_TOKEN']
+client = Client(BINANCE_API_KEY, BINANCE_SECRET_KEY)
 
-SECRET_KEY=os.environ['SECRET_KEY']
-API_KEY=os.environ['API_KEY']
-client=Client(API_KEY,SECRET_KEY)
-                
 def t(bot,update,args):
-    bot.send_chat_action(chat_id=update.message.chat_id,action=telegram.ChatAction.TYPING)
-    if args[-1] == '1':
-        coin_list=args[:-1]
-        opt=1
-    else:
-        coin_list=args
-        opt=0
-    for coinName in coin_list:
-        market=infolib.getMarket(coinName)
-        msg=tradelib.trade_analysis_500(client,market,opt)
-        update.message.reply_text(msg,parse_mode=ParseMode.MARKDOWN)
-        if opt==1:
-            bot.send_photo(chat_id=update.message.chat_id, photo=open(str(market)+'.png', 'rb'))
+    bot.send_chat_action(chat_id=update.message.chat_id, 
+                         action=telegram.ChatAction.TYPING)
+    coin = args
+    market = coin.upper()+'BTC'
+    for i in range(len(TIME_FRAME_LIST)):
+        analysis.analysis_visual(client, 
+                                 market, 
+                                 TIME_FRAME = TIME_FRAME_LIST[i], 
+                                 TIME_FRAME_DURATION = TIME_FRAME_DURATION_LIST[i])
+        bot.send_photo(chat_id=update.message.chat_id, 
+                       photo=open(str(market)+'.png', 'rb'))
 
-def a(bot,update,args):
-    bot.send_chat_action(chat_id=update.message.chat_id,action=telegram.ChatAction.TYPING)
-    if args[-1] in ['500','1000','1500','2000','2500','5000','7500','10000','12500','15000','17500','20000','25000','30000','35000','40000','45000','50000']:
-        num_trades=int(args[-1])
-        coin_list=args[:-1]
-    else:
-        num_trades=5000
-        coin_list=args
-    for coinName in coin_list[:4]:
-        market=infolib.getMarket(coinName)
-        tradelib.trade_msg_h1(client,market,num_trades)
-        bot.send_photo(chat_id=update.message.chat_id, photo=open(str(market)+'.png', 'rb'))
-        tradelib.trade_msg_m30(client,market,num_trades)
-        bot.send_photo(chat_id=update.message.chat_id, photo=open(str(market)+'.png', 'rb'))
-                
 def manual(bot,update):
-    bot.send_message(chat_id=update.message.chat_id,text="@trading\_analysis\_bot is a Telegram chatbot for data-driven analytics of crypto-market with technical indicators, social sentiment, developer activities and metrics related to crossed-network on-chain transactions. The aim is to assist traders on Binance exchange.\n*Features*\n- Technical indicators: RSI, MA, BB, etc\n- Order flow: Buy vs sell, Volume profile, Limit orderbook\n- Cryptoasset indexes: Bletchley, Bitwise, CRIX\n- Cryptoasset metrics: TX vol, NVT ratio, num active addresses, num transactions\n- Social sentiment and developer activities: Twitter, Reddit, Facebook, GitHub\n- Trading sessions: New York, London, Tokyo, Sydney\n- Customized notifications: Bitfinex BTCUSD abnormal volume\n*Commands*\n- /a <coin-name-1> <market-name-2> <coin-name-3> <number-of-recent-trades> - Transactions volume versus price statistics. The argument <number-of-recent-trades> can be 500, 1000, 1500, 2000, 2500, 5000, 7500, 10000, 12500, 15000, 17500, 20000, 25000, 30000, 35000, 40000, 45000, 50000 (can be omitted). Examples: /a qtumusdt hot bcn or /a hot npxs btcusdt 20000.\n- /t <coin-name-1> <market-2> <coin-name-3> <chart-flag> - Recent trades summary. If <chart-flag>=1, the volume vs price plot will be provided (can be omitted). Examples: /t hot bat mco 1 or /t npxs btcusdt.\n- /i <coin-name> - Coin information. Examples: /i hot or /i npxs.\n- /m - Market indexes.\n- /h - Trading sesions.\n*Supports*\nIf you don't have a crypto-trading account yet please use the these links to register to [Binance](https://www.binance.com/?ref=13339920) or [Huobi](https://www.huobi.br.com/en-us/topic/invited/?invite_code=x93k3).\nTipjar:\n- BTC: 1DrEMhMP5rAytKyKXRzc6szTcUX8bZzZgq\n- ETH: 0x3915D216f9Fc6ec08f956555e84385513dE5f214\n- LTC: LX8GJkGTZFmAA7puCyVp48333iQdCN6vca\n*Contact*\n@vitaljkb",parse_mode=ParseMode.MARKDOWN,disable_web_page_preview=True)
+    bot.send_message(chat_id=update.message.chat_id, 
+                     text=MANUAL_TEXT, 
+                     parse_mode=ParseMode.MARKDOWN, 
+                     disable_web_page_preview=True)
 
 def main():
-    updater=Updater(TOKEN)
+    updater=Updater(TELEGRAM_TOKEN)
     dp=updater.dispatcher
-    dp.add_handler(CommandHandler("start",manual))
-    dp.add_handler(CommandHandler("help",manual))
-    dp.add_handler(CommandHandler("a",a,pass_args=True))
-    dp.add_handler(CommandHandler("t",t,pass_args=True))
-    dp.add_handler(MessageHandler(Filters.text,send_msg))
-    dp.add_handler(MessageHandler(Filters.command,send_msg))
+    dp.add_handler(CommandHandler("start", manual))
+    dp.add_handler(CommandHandler("help", manual))
+    dp.add_handler(CommandHandler("t", t, pass_args=True))
     updater.start_polling()
     updater.idle()
 
