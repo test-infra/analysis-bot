@@ -84,6 +84,7 @@ P: 0.00000033 VWAP: -0.00000055 V: 33,989.78
 15 mins: Buy 57.69, Sell 15.03
 5 mins: Buy 26.10, Sell 4.00
 ```
+
 <img src="docs/img/1.jpg" width="700">
 
 ```
@@ -93,6 +94,7 @@ P: 0.00001125 VWAP: 0.00001111 V: 17,399.01
 15 mins: Buy 292.66, Sell 189.94
 5 mins: Buy 51.17, Sell 167.05
 ```
+
 <img src="docs/img/2.jpg" width="700">
 
 ```
@@ -102,6 +104,7 @@ P: 0.29832000 VWAP: 0.29999384 V: 15,777,651.16
 15 mins: Buy 24,027.64, Sell 33,808.34
 5 mins: Buy 5,598.12, Sell 1,822.65
 ```
+
 <img src="docs/img/3.jpg" width="700">
 
 ## Licence
