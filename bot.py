@@ -58,14 +58,6 @@ def t(bot,update,args):
         except Exception:
             pass
 
-def s(bot,update):
-    bot.send_chat_action(chat_id=update.message.chat_id, 
-                         action=telegram.ChatAction.TYPING)
-    marketList = utilities.get_market_list(client)
-    accumulateAnalysis = monitor.active_pair_monitor(client, marketList)
-    msg = str(accumulateAnalysis)
-    update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
-
 def manual(bot,update):
     bot.send_message(chat_id=update.message.chat_id, 
                      text=MANUAL_TEXT, 
@@ -78,7 +70,6 @@ def main():
     dp.add_handler(CommandHandler("start", manual))
     dp.add_handler(CommandHandler("help", manual))
     dp.add_handler(CommandHandler("t", t, pass_args=True))
-    dp.add_handler(CommandHandler("s", s))
     updater.start_polling()
     updater.idle()
 
