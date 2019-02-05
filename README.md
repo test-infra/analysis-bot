@@ -79,6 +79,7 @@ P: 0.00000033 VWAP: -0.00000055 V: 33,989.78
 5 mins: Buy 26.10, Sell 4.00
 ```
 <img src="docs/img/1.jpg" width="700">
+
 ```
 #HOTETH
 P: 0.00001125 VWAP: 0.00001111 V: 17,399.01
@@ -87,6 +88,7 @@ P: 0.00001125 VWAP: 0.00001111 V: 17,399.01
 5 mins: Buy 51.17, Sell 167.05
 ```
 <img src="docs/img/2.jpg" width="700">
+
 ```
 #XRPUSDT
 P: 0.29832000 VWAP: 0.29999384 V: 15,777,651.16
@@ -99,7 +101,7 @@ P: 0.29832000 VWAP: 0.29999384 V: 15,777,651.16
 ## Licence
 MIT
 
-## Support and Donation
+## Support
 
 - Star and/or fork this repository
 - Trade on Binance: https://www.binance.com/?ref=13339920
