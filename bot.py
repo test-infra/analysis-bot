@@ -49,14 +49,15 @@ def t(bot,update,args):
         try:
             TIME_FRAME = args[-2]
             TIME_FRAME_DURATION = int(args[-1])
-            analysis.analysis_visual(client, 
-                                     market, 
-                                     TIME_FRAME, 
-                                     TIME_FRAME_DURATION)
-            bot.send_photo(chat_id=update.message.chat_id, 
-                           photo=open(market+'.png', 'rb'))
         except Exception:
-            pass
+            TIME_FRAME = '1h'
+            TIME_FRAME_DURATION = 3
+        analysis.analysis_visual(client, 
+                                 market, 
+                                 TIME_FRAME, 
+                                 TIME_FRAME_DURATION)
+        bot.send_photo(chat_id=update.message.chat_id, 
+                       photo=open(market+'.png', 'rb'))
 
 def manual(bot,update):
     bot.send_message(chat_id=update.message.chat_id, 
