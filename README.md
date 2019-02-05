@@ -49,6 +49,7 @@ python bot.py
 ## Deployment on Heroku platform
 
 ```
+# Initialize
 heroku create trading-analysis-bot --buildpack heroku/python
 heroku config:set TELEGRAM_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 heroku config:set BINANCE_SECRET_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX 
@@ -57,75 +58,42 @@ git push heroku master
 heroku ps:scale bot=1 
 ```
 
+```
+# Update
+git add .
+git commit -m "Commit time: `date +'%Y-%m-%d %H:%M:%S'`"
+git push heroku master
+```
+
 ## Screenshots
 
-### General information
 ```
-/i zrx
-```
-```
-Symbol: ZRX Name: 0x
-Community (Reddit, Facebook, Twitter)
-- Facebook likes: 1240
-- Reddit average comments 48h: 2.5
-- Reddit accounts active 48h: 2898
-- Twitter followers: 134515
-- Reddit subscribers: 13784
-- Reddit average posts 48h: 0.417
-Developer (Github)
-- Forks: 199
-- Commit count 4 weeks: 519
-- Closed issues: 114
-- Pull requests merged: 567
-- Subscribers: 86
-- Stars: 785
-- Pull request contributors: 33
-- Total issues: 146
-```
-
-### Transactions statistics
-```
-/t zrx 1
+/t btt hoteth xrpusdt 1h 3
 ```
 ```
-#ZRXBTC: 0.00011096
-Transactions statistics (Last 500 trades)
-From 2018-08-31 09:39:43 to 2018-08-31 10:36:04 (UTC)
-~ 0$: Buy 49 vs Sell 27
-~ 1-10$: Buy 32 vs Sell 3
-> 100$: Buy 122 vs Sell 102
-> 200$: Buy 94 vs Sell 60
-> 500$: Buy 33 vs Sell 3
-> 1,000$: Buy 5 vs Sell 2
-> 2,000$: Buy 0 vs Sell 1
-> 5,000$: Buy 0 vs Sell 0
-> 10,000$: Buy 0 vs Sell 0
-Total: Buy 68,343 (52,521$) vs Sell 45,714 (35,059$)
-- Last 30 mins: Buy 42,792 vs Sell 16,584
-- Last 15 mins: Buy 22,665 vs Sell 6,965
-- Last 5 mins: Buy 6,644 vs Sell 3,130
+#BTTBTC
+P: 0.00000033 VWAP: -0.00000055 V: 33,989.78
+30 mins: Buy 380.16, Sell 80.68
+15 mins: Buy 57.69, Sell 15.03
+5 mins: Buy 26.10, Sell 4.00
 ```
-<img src="docs/img/t_zrx_1.png" width="700">
-
-### Order flow
+<img src="docs/img/1.jpg" width="700">
 ```
-/a zrx
+#HOTETH
+P: 0.00001125 VWAP: 0.00001111 V: 17,399.01
+30 mins: Buy 1,024.88, Sell 356.26
+15 mins: Buy 292.66, Sell 189.94
+5 mins: Buy 51.17, Sell 167.05
 ```
-<img src="docs/img/a_zrx_1h.jpg" width="700">
-<img src="docs/img/a_zrx_30m.jpg" width="700">
-
-### Cryptoasset indexes
+<img src="docs/img/2.jpg" width="700">
 ```
-/m
+#XRPUSDT
+P: 0.29832000 VWAP: 0.29999384 V: 15,777,651.16
+30 mins: Buy 260,474.12, Sell 107,121.40
+15 mins: Buy 24,027.64, Sell 33,808.34
+5 mins: Buy 5,598.12, Sell 1,822.65
 ```
-<img src="docs/img/bletchley_index.jpg" width="700">
-<img src="docs/img/crix_index.jpg" width="700">
-
-### Trading sessions
-```
-/h
-```
-<img src="docs/img/h.png" width="700">
+<img src="docs/img/3.jpg" width="700">
 
 ## Licence
 MIT
