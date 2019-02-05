@@ -39,9 +39,10 @@ client = Client(BINANCE_API_KEY, BINANCE_SECRET_KEY)
 def t(bot,update,args):
     bot.send_chat_action(chat_id=update.message.chat_id, 
                          action=telegram.ChatAction.TYPING)
+    marketList = utilities.get_market_list(client)['symbol'].tolist()
     for market in args:
         market = market.upper()
-        if len(market)<=5:
+        if market not in marketList:
             market = market+'BTC'
         msg = analysis.scalp_analysis(client, market)
         update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
@@ -57,7 +58,7 @@ def t(bot,update,args):
         except Exception:
             pass
 
-def s(bot,update,args):
+def s(bot,update):
     bot.send_chat_action(chat_id=update.message.chat_id, 
                          action=telegram.ChatAction.TYPING)
     marketList = utilities.get_market_list(client)
@@ -77,7 +78,7 @@ def main():
     dp.add_handler(CommandHandler("start", manual))
     dp.add_handler(CommandHandler("help", manual))
     dp.add_handler(CommandHandler("t", t, pass_args=True))
-    dp.add_handler(CommandHandler("s", s, pass_args=True))
+    dp.add_handler(CommandHandler("s", s))
     updater.start_polling()
     updater.idle()
 
