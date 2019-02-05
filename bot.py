@@ -3,7 +3,7 @@ import telegram
 from telegram import ParseMode
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from binance.client import Client
-from binance_trading_bot import utilities, analysis, visual
+from binance_trading_bot import utilities, analysis, visual, monitor
 
 MANUAL_TEXT = """@trading\_analysis\_bot is a Telegram chatbot for data-driven analytics of crypto-market on Binance.
  *Features*
@@ -57,6 +57,13 @@ def t(bot,update,args):
         except Exception:
             pass
 
+def s(bot,update,args):
+    bot.send_chat_action(chat_id=update.message.chat_id, 
+                         action=telegram.ChatAction.TYPING)
+    marketList = utilities.get_market_list(client)
+    accumulateAnalysis = monitor.active_pair_monitor(client, marketList)
+    update.message.reply_text(accumulateAnalysis, parse_mode=ParseMode.MARKDOWN)
+
 def manual(bot,update):
     bot.send_message(chat_id=update.message.chat_id, 
                      text=MANUAL_TEXT, 
@@ -69,6 +76,7 @@ def main():
     dp.add_handler(CommandHandler("start", manual))
     dp.add_handler(CommandHandler("help", manual))
     dp.add_handler(CommandHandler("t", t, pass_args=True))
+    dp.add_handler(CommandHandler("s", s, pass_args=True))
     updater.start_polling()
     updater.idle()
 
