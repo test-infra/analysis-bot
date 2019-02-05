@@ -62,7 +62,8 @@ def s(bot,update,args):
                          action=telegram.ChatAction.TYPING)
     marketList = utilities.get_market_list(client)
     accumulateAnalysis = monitor.active_pair_monitor(client, marketList)
-    update.message.reply_text(accumulateAnalysis, parse_mode=ParseMode.MARKDOWN)
+    msg = str(accumulateAnalysis)
+    update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
 
 def manual(bot,update):
     bot.send_message(chat_id=update.message.chat_id, 
