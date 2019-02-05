@@ -69,6 +69,12 @@ git push heroku master
 ## Screenshots
 
 ```
+/help
+```
+```
+<img src="docs/img/0.jpg" width="700">
+
+```
 /t btt hoteth xrpusdt 1h 3
 ```
 ```
