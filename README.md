@@ -6,23 +6,24 @@
 
 **Trading Analysis Bot** is a Telegram chatbot for data-driven analytics of cryptocurrencies market, particularly the Binance exchange. It provides standard technical indicators, social sentiment and developer activities. Market indexes, rankings and statistic metrics based on on-chain transactions across different blockchain networks are also reported.
 
+Verion 1.0 was archieved [here](https://github.com/trinhvv/trading-analysis-bot/tree/5ed3707b769b85706ea2072667357e7d5fa721b3).
+
 ## Requirements
 
-- Telegram library: python-telegram-bot
-- Exchange library: python-binance
-- Computational libraries: numpy, pandas
-- Visualization library: matplotlib
+- Telegram: python-telegram-bot
+- Exchange: python-binance
+- Numerical and data: numpy, pandas
+- Visualization: matplotlib, seaborn
 
 ## Features
 
-- Technical indicators: RSI, MA, BB, etc
-- Order flow: Buy vs sell, Volume profile, Limit orderbook
-- Cryptoasset indexes: Bletchley, Bitwise, CRIX
-- Cryptoasset metrics: TX vol, NVT ratio, No. active addresses, No. transactions
-- Social sentiment and developer activities: Twitter, Reddit, Facebook, GitHub
-- Trading sessions
-- Customized notifications
-- Administrator and user management
+ - Technical indicators: MA, BB, Ichimoku, VRVP 
+ - Orderflow: LOB, Heatmap
+ - Market indexes: Bletchley, Bitwise, CRIX 
+ - On-chain metrics: NVTS, MVRV Z-Score
+ - Sentiment and development: Twitter, Reddit, GitHub
+ - Trading sessions: New York, London, Tokyo, Sydney
+ - Customized notifications
 
 ## Run on local machine
 

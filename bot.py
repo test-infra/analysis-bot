@@ -8,7 +8,7 @@ from binance_trading_bot import utilities, analysis, visual
 MANUAL_TEXT = """@trading\_analysis\_bot is a Telegram chatbot for data-driven analytics of crypto-market on Binance.
  *Features*
  - Technical indicators: MA, BB, Ichimoku, VRVP 
- - Orderflow: Buy/sell volume, Limit order book
+ - Orderflow: LOB, Heatmap
  - Market indexes: Bletchley, Bitwise, CRIX 
  - On-chain metrics: NVTS, MVRV Z-Score
  - Sentiment and development: Twitter, Reddit, GitHub
