@@ -41,7 +41,7 @@ def t(bot,update,args):
                          action=telegram.ChatAction.TYPING)
     for market in args:
         market = market.upper()
-        if len(market)<=4:
+        if len(market)<=5:
             market = market+'BTC'
         msg = analysis.scalp_analysis(client, market)
         update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
