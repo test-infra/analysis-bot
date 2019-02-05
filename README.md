@@ -71,7 +71,7 @@ git push heroku master
 ```
 /help
 ```
-```
+
 <img src="docs/img/0.jpg" width="700">
 
 ```
