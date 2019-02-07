@@ -3,22 +3,25 @@ import telegram
 from telegram import ParseMode
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from binance.client import Client
-from binance_trading_bot import utilities, analysis, visual, monitor
+from binance_trading_bot import utilities, analysis, visual, monitor, news
 
 MANUAL_TEXT = """@trading\_analysis\_bot is a Telegram chatbot for data-driven analytics of crypto-market on Binance.
  *Features*
  - Technical indicators: MA, BB, Ichimoku, VRVP 
- - Orderflow: LOB, Heatmap
+ - Orderflow: limit order book, trading heatmap
  - Market indexes: Bletchley, Bitwise, CRIX 
  - On-chain metrics: NVTS, MVRV Z-Score
  - Sentiment and development: Twitter, Reddit, GitHub
  - Trading sessions: New York, London, Tokyo, Sydney
+ - Newsflow: curated articles
+ - Project profiles: token distribution model
  - Customized notifications
  *Commands*
  - /t <market> <time-frame> <num-day> 
  Transactions volume versus price statistics. 
  The argument <time-frame> and <num-day> can be omitted. 
  Examples: /t qtumusdt bttbnb or /t bttbtc xlmusdt 4h 30.
+ - /n - Newsflow.
  - /m - Market indexes.
  - /h - Trading sesions.
  *Supports*
@@ -58,6 +61,12 @@ def t(bot,update,args):
                                  TIME_FRAME_DURATION)
         bot.send_photo(chat_id=update.message.chat_id, 
                        photo=open(market+'.png', 'rb'))
+                       
+def n(bot,update):
+    bot.send_chat_action(chat_id=update.message.chat_id, 
+                         action=telegram.ChatAction.TYPING)
+    msg = news.news()
+    update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
 
 def manual(bot,update):
     bot.send_message(chat_id=update.message.chat_id, 
@@ -71,6 +80,7 @@ def main():
     dp.add_handler(CommandHandler("start", manual))
     dp.add_handler(CommandHandler("help", manual))
     dp.add_handler(CommandHandler("t", t, pass_args=True))
+    dp.add_handler(CommandHandler("n", n))
     updater.start_polling()
     updater.idle()
 
