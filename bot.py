@@ -66,7 +66,7 @@ def n(bot,update):
     bot.send_chat_action(chat_id=update.message.chat_id, 
                          action=telegram.ChatAction.TYPING)
     msg = news.news()
-    update.message.reply_text(msg)
+    update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
 
 def manual(bot,update):
     bot.send_message(chat_id=update.message.chat_id, 
