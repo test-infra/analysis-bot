@@ -5,3 +5,5 @@ datetime
 matplotlib
 seaborn
 pandas
+six
+json
