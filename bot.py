@@ -14,7 +14,7 @@ MANUAL_TEXT = """@trading\_analysis\_bot is a Telegram chatbot for data-driven a
  - Sentiment and development: Twitter, Reddit, GitHub
  - Trading sessions: New York, London, Tokyo, Sydney
  - Newsflow: curated articles
- - Project profiles: token distribution model
+ - Project profiles
  - Customized notifications
  *Commands*
  - /t <market> <time-frame> <num-day> 
@@ -61,12 +61,6 @@ def t(bot,update,args):
                                  TIME_FRAME_DURATION)
         bot.send_photo(chat_id=update.message.chat_id, 
                        photo=open(market+'.png', 'rb'))
-                       
-def n(bot,update):
-    bot.send_chat_action(chat_id=update.message.chat_id, 
-                         action=telegram.ChatAction.TYPING)
-    msg = news.news()
-    update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
 
 def manual(bot,update):
     bot.send_message(chat_id=update.message.chat_id, 
@@ -80,7 +74,6 @@ def main():
     dp.add_handler(CommandHandler("start", manual))
     dp.add_handler(CommandHandler("help", manual))
     dp.add_handler(CommandHandler("t", t, pass_args=True))
-    dp.add_handler(CommandHandler("n", n))
     updater.start_polling()
     updater.idle()
 
