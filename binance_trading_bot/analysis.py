@@ -8,23 +8,6 @@ import matplotlib.pyplot as plt
 plt.style.use('classic')
 from matplotlib.ticker import FormatStrFormatter
 
-def get_trades(client, market, timeDuration, timeFrame):
-    klines = client.get_historical_klines(symbol=market, 
-                                          interval=timeFrame, 
-                                          start_str=timeDuration)
-    n_transactions = sum([item[8] for item in klines])
-    toId = client.get_historical_trades(symbol=market, limit=1)[0]['id']
-    listId = np.arange(toId-n_transactions+1, toId-10,500)
-    trades = []
-    for fromId in listId:
-        trades = trades+client.get_historical_trades(symbol=market, 
-                                                     fromId=str(fromId))
-    trades = pd.DataFrame(trades)
-    trades['price'] = pd.to_numeric(trades['price'])
-    trades['qty'] = pd.to_numeric(trades['qty'])
-    trades['value'] = trades['price']*trades['qty']
-    return trades
-
 def get_candles(client, market, timeFrame, timeDuration):
     klines = client.get_historical_klines(symbol=market, 
                                           interval=timeFrame, 
@@ -45,52 +28,6 @@ def get_candles(client, market, timeFrame, timeDuration):
     candles['buyQuoteVolume'] = pd.to_numeric(klines[10])
     candles['sellQuoteVolume'] = candles['quoteVolume']-candles['buyQuoteVolume']
     return candles
-
-def get_order_book(client, market):
-    bids = pd.DataFrame(client.get_order_book(symbol=market)['bids']).drop(columns=2)
-    bids.columns = ['price', 'baseQty']
-    bids = bids.apply(pd.to_numeric, errors='coerce')
-    bids['quoteValue'] = bids['price']*bids['baseQty']
-    bids['cumsum'] = bids['quoteValue'].cumsum()
-    bids = bids.drop(columns=['baseQty', 'quoteValue'])
-    asks = pd.DataFrame(client.get_order_book(symbol=market)['asks']).drop(columns=2)
-    asks.columns = ['price', 'baseQty']
-    asks = asks.apply(pd.to_numeric, errors='coerce')
-    asks['quoteValue'] = asks['price']*asks['baseQty']
-    asks['cumsum'] = asks['quoteValue'].cumsum()
-    asks = asks.drop(columns=['baseQty', 'quoteValue'])
-    lob = bids.append(asks, ignore_index=True)
-    lob = lob.sort_values('price', ascending=True)
-    lob.columns = ['price', time.ctime()]
-    return lob
-
-def daily_sell_volume(client, 
-                      marketList, 
-                      DAILY_SELL_VOLUME_THRESHOLD=30,
-                      TIME_FRAME_DURATION=30):
-    analysisResult = marketList[(marketList['tradedMoney']<=DAILY_SELL_VOLUME_THRESHOLD)]
-    analysisResult = analysisResult[(analysisResult['tradedMoney']>0)]
-    analysisResult = analysisResult.reset_index(drop=True)
-    sell_volume_matrix = np.zeros((len(analysisResult['symbol']), TIME_FRAME_DURATION))
-    for market_index in range(len(analysisResult['symbol'])):
-        candles = get_candles(client, 
-                              analysisResult['symbol'][market_index],
-                              '1d', 
-                              str(TIME_FRAME_DURATION)+' days ago UTC')
-        for time_index in range(TIME_FRAME_DURATION):
-            sell_volume_matrix.itemset((market_index, time_index),
-                                       candles['sellQuoteVolume'][time_index])
-    for time_index in range(TIME_FRAME_DURATION):
-        ts = candles['open_time'][time_index]
-        analysisResult[datetime.utcfromtimestamp(ts/1000).strftime('%Y-%m-%d')] = sell_volume_matrix[:,time_index]
-    analysisResult = analysisResult.drop(columns='tradedMoney')
-    analysisResult = analysisResult.set_index('symbol')
-    analysisResult = analysisResult.sort_values(analysisResult.columns[-1], ascending=True)    
-    fig, ax = plt.subplots(figsize=(30,20))
-    analysisResult = analysisResult.sort_values(analysisResult.columns[-1], ascending=True)      
-    sns.heatmap(analysisResult.head(20), linewidths=.5, ax=ax, cbar=False)
-    plt.savefig('daily_sell_volume.png', bbox_inches='tight', format='png', dpi=300) 
-    return analysisResult
 
 def volume_analysis(client, market, TIME_FRAME_DURATION=28):
     NUM_PRICE_STEP = 20
@@ -129,8 +66,6 @@ def analysis_visual(client, market, TIME_FRAME='1d', TIME_FRAME_DURATION=30):
                           market,
                           TIME_FRAME, 
                           str(TIME_FRAME_DURATION)+' days ago UTC')
-    candles['OBV'] = candles['buyQuoteVolume']-candles['sellQuoteVolume']
-    candles['OBV'] = candles['OBV'].cumsum()
     volumeAnalysis = volume_analysis(client, market, TIME_FRAME_DURATION)
     f,(ax1,ax2)=plt.subplots(2,1,gridspec_kw={'height_ratios':[1,1]})
     f.set_size_inches(20,15)
@@ -196,11 +131,6 @@ def analysis_visual(client, market, TIME_FRAME='1d', TIME_FRAME_DURATION=30):
     ax2.get_yaxis().set_label_coords(-0.075,0.5) 
     ax2.set_ylabel("Buy versus Sell Quote Volume",fontsize=20)
     ax2.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
-    ax2p=ax2.twinx()
-    ax2p.plot(candles['OBV'], linewidth=4, color='violet')
-    for tic in ax2p.yaxis.get_major_ticks():
-        tic.tick1On = tic.tick2On = False
-        tic.label1On = tic.label2On = False
     f.tight_layout()
     plt.savefig(market+'.png',bbox_inches='tight')
     
