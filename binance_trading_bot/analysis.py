@@ -129,10 +129,17 @@ def analysis_visual(client, market, TIME_FRAME='1d', TIME_FRAME_DURATION=30):
                           market,
                           TIME_FRAME, 
                           str(TIME_FRAME_DURATION)+' days ago UTC')
+    candles['OBV'] = candles['buyQuoteVolume']-candles['sellQuoteVolume']
+    candles['OBV'] = candles['OBV'].cumsum()
     volumeAnalysis = volume_analysis(client, market, TIME_FRAME_DURATION)
     f,(ax1,ax2)=plt.subplots(2,1,gridspec_kw={'height_ratios':[1,1]})
     f.set_size_inches(20,15)
-    ax1.set_title('Market: '+market+' Frame: '+TIME_FRAME+' Duration: '+str(TIME_FRAME_DURATION)+'d', fontsize=30, y=1.03, loc='left')
+    ax1.set_title('Market: '+market+\
+                  ' Frame: '+TIME_FRAME+\
+                  ' Duration: '+str(TIME_FRAME_DURATION)+'d', 
+                  fontsize=30, 
+                  y=1.03, 
+                  loc='left')
     ax1p=ax1.twiny()
     ax1p.barh(volumeAnalysis['price'],
               volumeAnalysis['buy_volume']+volumeAnalysis['sell_volume'],
@@ -189,6 +196,11 @@ def analysis_visual(client, market, TIME_FRAME='1d', TIME_FRAME_DURATION=30):
     ax2.get_yaxis().set_label_coords(-0.075,0.5) 
     ax2.set_ylabel("Buy versus Sell Quote Volume",fontsize=20)
     ax2.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+    ax2p=ax2.twinx()
+    ax2p.plot(candles['OBV'], linewidth=4, color='violet')
+    for tic in ax2p.yaxis.get_major_ticks():
+        tic.tick1On = tic.tick2On = False
+        tic.label1On = tic.label2On = False
     f.tight_layout()
     plt.savefig(market+'.png',bbox_inches='tight')
     
