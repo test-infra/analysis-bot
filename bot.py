@@ -3,7 +3,7 @@ import telegram
 from telegram import ParseMode
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from binance.client import Client
-from binance_trading_bot import utilities, analysis, visual, monitor, news
+from binance_trading_bot import utilities, analysis, visual, monitor
 
 MANUAL_TEXT = """@trading\_analysis\_bot is a Telegram chatbot for data-driven analytics of crypto-market on Binance.
  *Features*
@@ -21,6 +21,8 @@ MANUAL_TEXT = """@trading\_analysis\_bot is a Telegram chatbot for data-driven a
  Transactions volume versus price statistics. 
  The argument <time-frame> and <num-day> can be omitted. 
  Examples: /t qtumusdt bttbnb or /t bttbtc xlmusdt 4h 30.
+ - /a <market> 
+ Demand and supply analysis. 
  - /n - Newsflow.
  - /m - Market indexes.
  - /h - Trading sesions.
@@ -39,6 +41,8 @@ BINANCE_SECRET_KEY = os.environ['BINANCE_SECRET_KEY']
 BINANCE_API_KEY = os.environ['BINANCE_API_KEY']
 
 client = Client(BINANCE_API_KEY, BINANCE_SECRET_KEY)
+
+ADMIN_USERNAME = os.environ['ADMIN_USERNAME']
 
 def t(bot,update,args):
     bot.send_chat_action(chat_id=update.message.chat_id, 
@@ -61,7 +65,22 @@ def t(bot,update,args):
                                  TIME_FRAME, 
                                  TIME_FRAME_DURATION)
         bot.send_photo(chat_id=update.message.chat_id, 
-                       photo=open(market+'.png', 'rb'))
+                       photo=open('img/'+market+'.png', 'rb'))
+                       
+def a(bot,update,args):
+    bot.send_chat_action(chat_id=update.message.chat_id, 
+                         action=telegram.ChatAction.TYPING)
+    if str(update.message.from_user.username)==ADMIN_USERNAME:
+        marketList = utilities.get_market_list(client)['symbol'].tolist()
+        market = args.upper()
+        if market not in marketList:
+            market = market+'BTC'
+        analysis.analysis_visual(client, market)
+        bot.send_photo(chat_id=update.message.chat_id, 
+                       photo=open('img/'+market+'.png', 'rb'))
+    else:
+        msg = "This feature is restricted only for registered users."
+        update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
 
 def manual(bot,update):
     bot.send_message(chat_id=update.message.chat_id, 
