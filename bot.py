@@ -3,7 +3,7 @@ import telegram
 from telegram import ParseMode
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from binance.client import Client
-from binance_trading_bot import utilities, analysis, visual, monitor
+from binance_trading_bot import utilities, analysis
 
 MANUAL_TEXT = """@trading\_analysis\_bot is a Telegram chatbot for data-driven analytics of crypto-market on Binance.
  *Features*
@@ -66,21 +66,6 @@ def t(bot,update,args):
                                  TIME_FRAME_DURATION)
         bot.send_photo(chat_id=update.message.chat_id, 
                        photo=open('img/'+market+'.png', 'rb'))
-                       
-def a(bot,update,args):
-    bot.send_chat_action(chat_id=update.message.chat_id, 
-                         action=telegram.ChatAction.TYPING)
-    if str(update.message.from_user.username)==ADMIN_USERNAME:
-        marketList = utilities.get_market_list(client)['symbol'].tolist()
-        market = args.upper()
-        if market not in marketList:
-            market = market+'BTC'
-        analysis.analysis_visual(client, market)
-        bot.send_photo(chat_id=update.message.chat_id, 
-                       photo=open('img/'+market+'.png', 'rb'))
-    else:
-        msg = "This feature is restricted only for registered users."
-        update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
 
 def manual(bot,update):
     bot.send_message(chat_id=update.message.chat_id, 
