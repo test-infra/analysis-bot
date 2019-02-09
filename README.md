@@ -18,7 +18,7 @@ Verion 1.0 was archieved [here](https://github.com/trinhvv/trading-analysis-bot/
 ## Features
 
  - Technical indicators: MA, BB, Ichimoku, VRVP 
- - Orderflow: LOB, Heatmap
+ - Orderflow: LOB, Heatmap, Supply Demand Analysis
  - Market indexes: Bletchley, Bitwise, CRIX 
  - On-chain metrics: NVTS, MVRV Z-Score
  - Sentiment and development: Twitter, Reddit, GitHub
@@ -115,6 +115,8 @@ MIT
 - Star and/or fork this repository
 - Trade on Binance: https://www.binance.com/?ref=13339920
 - Trade on Huobi: https://www.huobi.br.com/en-us/topic/invited/?invite_code=x93k3
+- Trade on Coinbase: https://www.coinbase.com/join/581a706d01bc8b00dd1d1737
+-  Use the Brave privacy browser to earn BAT token: https://brave.com/ken335
 - BTC tipjar: 1DrEMhMP5rAytKyKXRzc6szTcUX8bZzZgq
 - ETH tipjar: 0x3915D216f9Fc6ec08f956555e84385513dE5f214
 - LTC tipjar: LX8GJkGTZFmAA7puCyVp48333iQdCN6vca
