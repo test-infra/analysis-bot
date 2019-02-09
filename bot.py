@@ -42,8 +42,6 @@ BINANCE_API_KEY = os.environ['BINANCE_API_KEY']
 
 client = Client(BINANCE_API_KEY, BINANCE_SECRET_KEY)
 
-ADMIN_USERNAME = os.environ['ADMIN_USERNAME']
-
 def t(bot,update,args):
     bot.send_chat_action(chat_id=update.message.chat_id, 
                          action=telegram.ChatAction.TYPING)
