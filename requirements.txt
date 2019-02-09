@@ -5,3 +5,4 @@ datetime
 matplotlib
 seaborn
 pandas
+pandas_talib
