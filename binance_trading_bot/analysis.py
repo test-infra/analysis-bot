@@ -132,7 +132,7 @@ def analysis_visual(client, market, TIME_FRAME='1d', TIME_FRAME_DURATION=30):
     ax2.set_ylabel("Buy versus Sell Quote Volume",fontsize=20)
     ax2.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
     f.tight_layout()
-    plt.savefig('img/'+market+'.png',bbox_inches='tight')
+    plt.savefig(market+'.png',bbox_inches='tight')
     
 def scalp_analysis(client, market):
     ticker = client.get_ticker(symbol=market)
