@@ -1,16 +1,24 @@
-from binance_trading_bot import utilities, analysis
+import numpy as np
+import pandas as pd
+from datetime import datetime
+from binance_trading_bot import utilities, visual, analysis
+import seaborn as sns
+import matplotlib.pyplot as plt
+plt.style.use('classic')
+from matplotlib.ticker import FormatStrFormatter
+import time
         
-def active_pair_monitor(client, marketList):
+def active_trading(client, marketList):
     accumulateAnalysis = marketList
     n_trades = []
     buy_volume = []
     sell_volume = []
     for coin in accumulateAnalysis['symbol']:
         try:
-            candles = utilities.get_candles(client, coin, '15m', '1 hour ago UTC')
-            n_trades.append(candles['n_trades'].iloc[-1])
-            buy_volume.append(candles['buyQuoteVolume'].iloc[-1])
-            sell_volume.append(candles['sellQuoteVolume'].iloc[-1])
+            candles = utilities.get_candles(client, coin, '1m', '1 hour ago UTC')
+            n_trades.append(sum(candles['n_trades'].iloc[-5:]))
+            buy_volume.append(sum(candles['buyQuoteVolume'].iloc[-5:]))
+            sell_volume.append(sum(candles['sellQuoteVolume'].iloc[-5:]))
         except Exception:
             n_trades.append(0)
             buy_volume.append(0)
@@ -19,16 +27,25 @@ def active_pair_monitor(client, marketList):
     accumulateAnalysis['buy_volume'] = buy_volume
     accumulateAnalysis['sell_volume'] = sell_volume
     accumulateAnalysis = accumulateAnalysis[(accumulateAnalysis['n_trades']>=100)]
-    accumulateAnalysis = accumulateAnalysis.drop(columns='tradedMoney')
     accumulateAnalysis = accumulateAnalysis.set_index('symbol')
+    accumulateAnalysis = accumulateAnalysis.drop(['tradedMoney', 'n_trades_24h', 'change_24h'], 1)
     accumulateAnalysis = accumulateAnalysis.sort_values('n_trades', 
                                                         ascending=False)
     return accumulateAnalysis
 
-def positive_divergence(client, marketList):
-    for market in marketList:
-        candles = utilities.get_candles(client, market, '1d', '14 days ago UTC')
-        candles['OBV'] = candles['buyQuoteVolume']-candles['sellQuoteVolume']
-        candles['OBV'] = candles['OBV'].cumsum()
-        if candles['OBV'].iat[-1]>=candles['OBV'].iat[-2]:
-            analysis.analysis_visual(client, market)
+def market_change(client):
+    marketList = pd.DataFrame(client.get_products()['data'])
+    parentMarketList = list(set(marketList['parentMarket'].tolist()))
+    msg = '#MARKET '
+    for parentMarket in parentMarketList:
+        baseAssetList = list(set(marketList[marketList['parentMarket']==parentMarket]['quoteAsset']))
+        positiveCount = 0
+        negativeCount = 0
+        for baseAsset in baseAssetList:
+            marketList_ = utilities.get_market_list(client, baseAsset)
+            positiveCount = positiveCount+len(marketList_[marketList_['change_24h']>=0.])
+            negativeCount = negativeCount+len(marketList_[marketList_['change_24h']<0.])
+        msg = msg+'\n'+parentMarket+': '+str(positiveCount)+' (+) '+str(negativeCount)+' (-)'
+    msg = msg+'\n'+time.ctime()
+    return msg
+        

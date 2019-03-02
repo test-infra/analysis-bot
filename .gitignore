@@ -1,7 +1,7 @@
 __pycache__
 git.sh
-deploy_local_win.bat
 deploy_heroku.bat
 update_heroku.bat
 binance_trading_bot/order.py
 binance_trading_bot/strategies.py
+binance_trading_bot/__pycache__

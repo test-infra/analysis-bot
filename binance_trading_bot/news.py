@@ -1,14 +1,13 @@
 from six.moves import urllib
 import json
-import pandas as pd
 
-def news():
+def newsflow():
     url = "https://data.messari.io/api/v1/news"
-    news = pd.DataFrame(json.load(urllib.request.urlopen(url))['data'])
-    news = news[['title', 'url']]
+    data = json.loads(urllib.request.urlopen(url).read().decode('utf-8'))['data']
     msg = '*Newsflow*'
-    for i in range(len(news)):
-        msg = msg+'\n'+news['title'].iat[i]+'\n'+news['url'].iat[i]
+    for item in data:
+        try:
+            msg = msg+'\n'+item['title']+' ([url]('+item['url']+'))'
+        except Exception:
+            pass
     return msg
-
-
