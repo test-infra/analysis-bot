@@ -16,7 +16,7 @@ Homepage: [https://kenhtaichinh.herokuapp.com](https://kenhtaichinh.herokuapp.co
 - /t <market>
 Usage: /t qtumusdt or /t btt xlmusdt bttbnb.
 - /s <market> <time-step> <time-frame> <time-duration>
-Last three arguments can be omitted.
+Three last arguments can be omitted.
 Usage: /s qtumusdt or /s btt 15m 1h 3\_days\_ago\_UTC.
 - /a <change-24h-lb> <change-24h-ub> 
 Two last arguments can be omitted. 
