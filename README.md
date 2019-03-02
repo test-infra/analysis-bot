@@ -6,7 +6,9 @@
 
 A Telegram chatbot for data-driven analytics of crypto-market on Binance.
 
-[Homepage](https://kenhtaichinh.herokuapp.com) [Verion 1.0](https://github.com/trinhvv/trading-analysis-bot/tree/5ed3707b769b85706ea2072667357e7d5fa721b3) [Verion 2.0](https://github.com/trinhvv/trading-analysis-bot/commit/312dbe918b019d5d663e5a73e2662f30b86d048e)
+[Homepage](https://kenhtaichinh.herokuapp.com) [v1.0](https://github.com/trinhvv/trading-analysis-bot/tree/5ed3707b769b85706ea2072667357e7d5fa721b3) [v2.0](https://github.com/trinhvv/trading-analysis-bot/commit/312dbe918b019d5d663e5a73e2662f30b86d048e)
+
+<br/>
 
 ## Features
 
