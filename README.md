@@ -2,14 +2,10 @@
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-<a href="https://t.me/trading_analysis_bot"><img src="https://github.com/trinhvv/trading-analysis-bot/blob/master/docs/img/avatar.png" align="left" hspace="5" vspace="3" width="90"></a>
+<a href="https://t.me/trading_analysis_bot"><img src="https://github.com/trinhvv/trading-analysis-bot/blob/master/img/avatar.png" align="left" hspace="5" vspace="3" width="90"></a>
 
 A Telegram chatbot for data-driven analytics of crypto-market on Binance.
-Homepage: https://kenhtaichinh.herokuapp.com.
-
-[Verion 1.0](https://github.com/trinhvv/trading-analysis-bot/tree/5ed3707b769b85706ea2072667357e7d5fa721b3).
-
-[Verion 2.0](https://github.com/trinhvv/trading-analysis-bot/commit/312dbe918b019d5d663e5a73e2662f30b86d048e)
+[Homepage](https://kenhtaichinh.herokuapp.com) [Verion 1.0](https://github.com/trinhvv/trading-analysis-bot/tree/5ed3707b769b85706ea2072667357e7d5fa721b3) [Verion 2.0](https://github.com/trinhvv/trading-analysis-bot/commit/312dbe918b019d5d663e5a73e2662f30b86d048e)
 
 ## Features
 
@@ -88,6 +84,12 @@ Sat Mar  2 19:31:57 2019
 /t xlmusdt
 ```
 
+<img src="img/t.jpg" width="700">
+
+```
+/s xlmusdt
+```
+
 ```
 #XLMUSDT
 P: 0.08302000 VWAP: 0.08420219 V: 2,149,121.50
@@ -96,7 +98,7 @@ P: 0.08302000 VWAP: 0.08420219 V: 2,149,121.50
 5 mins: Buy 585.29, Sell 648.01
 ```
 
-<img src="img/t.jpg" width="700">
+<img src="img/s.jpg" width="700">
 
 ```
 /n
