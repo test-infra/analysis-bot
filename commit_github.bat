@@ -1,3 +1,3 @@
 git add .
-git commit -am "make it better"
+git commit -m "Commit time: `date +'%Y-%m-%d %H:%M:%S'`"
 git push origin master

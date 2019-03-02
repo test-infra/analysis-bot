@@ -14,7 +14,9 @@ A Telegram chatbot for data-driven analytics of crypto-market on Binance.
 - Newsflow: Curated articles, Project profiles.
 - Access control
 
-## Deployment on local machine
+## Deployment
+
+### Local Machine
 
 ```
 pip install -r requirements.txt
@@ -38,7 +40,7 @@ export TELEGRAM_ADMIN_USERNAME=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 python bot.py
 ```
 
-## Deployment on Heroku platform
+### Heroku
 
 ```
 # Initialize
@@ -60,11 +62,15 @@ git push heroku master
 
 ## Screenshots
 
+### Manual
+
 ```
 /help or /manual
 ```
 
 <img src="img/manual.jpg" width="700">
+
+### Market Statistics
 
 ```
 /m
@@ -79,11 +85,15 @@ BNB: 28 (+) 54 (-)
 Sat Mar  2 19:31:57 2019
 ```
 
+### Supply and Demand Analysis
+
 ```
 /t xlmusdt
 ```
 
 <img src="img/t.jpg" width="700">
+
+### Scalping Analysis
 
 ```
 /s xlmusdt
@@ -98,6 +108,8 @@ P: 0.08302000 VWAP: 0.08420219 V: 2,149,121.50
 ```
 
 <img src="img/s.jpg" width="700">
+
+### Newsflow
 
 ```
 /n
