@@ -53,13 +53,6 @@ git push heroku master
 heroku ps:scale bot=1 
 ```
 
-```
-# Update
-git add .
-git commit -m "Commit time: `date +'%Y-%m-%d %H:%M:%S'`"
-git push heroku master
-```
-
 ## Screenshots
 
 ### Manual
@@ -88,7 +81,7 @@ Sat Mar  2 19:31:57 2019
 ### Supply and Demand Analysis
 
 ```
-/t xlmusdt
+/t fet
 ```
 
 <img src="img/t.jpg" width="700">
