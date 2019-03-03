@@ -114,7 +114,7 @@ def analysis_visual(client, market, TIME_FRAME_STEP, TIME_FRAME, TIME_FRAME_DURA
         candles['OBV'] = candles['OBV'].cumsum()
         axt.plot(candles['OBV'].rolling(7).mean(), linewidth=4, color='violet', label='Simple Moving Average (7)')
         axt.plot(candles['OBV'].rolling(13).mean(), linewidth=4, color='orange', label='Simple Moving Average (13)')
-        axt.plot(candles['OBV'], linewidth=4, color='indigo', label='Demand and Supply Balance')
+        axt.plot(candles['OBV'], linewidth=4, color='indigo', label='Demand and Supply Imbalance')
         for tic in axt.yaxis.get_major_ticks():
             tic.tick1On = tic.tick2On = False
             tic.label1On = tic.label2On = False
