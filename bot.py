@@ -93,8 +93,8 @@ def t(bot, update, args):
                                          TIME_FRAME_STEP, 
                                          TIME_FRAME, 
                                          TIME_FRAME_DURATION)
-                bot.send_photo(chat_id=update.message.chat_id, 
-                           photo=open('img/'+market+'.png', 'rb'))
+            bot.send_photo(chat_id=update.message.chat_id, 
+                       photo=open('img/'+market+'.png', 'rb'))
                            
 def s(bot, update, args):
     bot.send_chat_action(chat_id=update.message.chat_id, 
