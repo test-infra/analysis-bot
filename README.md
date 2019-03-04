@@ -88,18 +88,18 @@ Sat Mar  2 19:31:57 2019
 
 <img src="img/t.jpg" width="700">
 
-### Scalping Analysis
+### Scalping
 
 ```
-/s xlmusdt
+/s fet
 ```
 
 ```
-#XLMUSDT
-P: 0.08302000 VWAP: 0.08420219 V: 2,149,121.50
-30 mins: Buy 5,189.32, Sell 9,287.83
-15 mins: Buy 1,535.70, Sell 2,095.77
-5 mins: Buy 585.29, Sell 648.01
+#FETBTC
+P: 0.00008982 VWAP: 0.00009359 V: 4,121.56
+30 mins: Buy 21.49, Sell 46.61
+15 mins: Buy 13.10, Sell 27.35
+5 mins: Buy 0.03, Sell 0.01
 ```
 
 <img src="img/s.jpg" width="700">
