@@ -8,8 +8,8 @@ from binance_trading_bot import utilities, analysis, monitor, news
 MANUAL_TEXT = """A Telegram chatbot for data-driven analytics of crypto-market on Binance.
 Homepage: [https://kenhtaichinh.herokuapp.com](https://kenhtaichinh.herokuapp.com).
 *Features*
-- Altcoin analysis: Supply, Transaction count, Demand versus supply.
-- Market movement: Statistics, Indexes (Bletchley, CRIX), Heatmaps.
+- Altcoin analysis: Demand versus supply imbalance.
+- Market movement: Statistics, Indexes (Bletchley, CRIX).
 - Bitcoin metrics: NVT (Ratio/Signal), MVRV (Z-Score), Network momentum.
 - Newsflow: Curated articles, Project profiles.
 *Commands*

@@ -10,8 +10,8 @@ A Telegram chatbot for data-driven analytics of crypto-market on Binance.
 
 ## Features
 
-- Altcoin analysis: Supply, Transaction count, Demand versus supply.
-- Market movement: Statistics, Indexes (Bletchley, CRIX), Heatmaps.
+- Altcoin analysis: Demand versus supply imbalance.
+- Market movement: Statistics, Indexes (Bletchley, CRIX).
 - Bitcoin metrics: NVT (Ratio/Signal), MVRV (Z-Score), Network momentum.
 - Newsflow: Curated articles, Project profiles.
 - Access control
@@ -80,7 +80,7 @@ BNB: 28 (+) 54 (-)
 Sat Mar  2 19:31:57 2019
 ```
 
-### Supply and Demand Analysis
+### Supply and Demand Imbalance
 
 ```
 /t fet
