@@ -56,7 +56,14 @@ def analysis_visual(client, market, TIME_FRAME_STEP, TIME_FRAME, TIME_FRAME_DURA
             ax2 = ax[1]    
         axt = ax1.twiny()
         axt.barh(volumeAnalysis['price'],
-                 volumeAnalysis['sell_volume'],
+                 volumeAnalysis['buy_volume'],
+                 color='gray',
+                 edgecolor='w',
+                 height=volumeAnalysis['price'][1]-volumeAnalysis['price'][0],
+                 align='center',
+                 alpha=0.25)
+        axt.barh(volumeAnalysis['price'],
+                 volumeAnalysis['buy_volume']+volumeAnalysis['sell_volume'],
                  color='gray',
                  edgecolor='w',
                  height=volumeAnalysis['price'][1]-volumeAnalysis['price'][0],
@@ -121,7 +128,7 @@ def analysis_visual(client, market, TIME_FRAME_STEP, TIME_FRAME, TIME_FRAME_DURA
         ax2.get_xaxis().set_label_coords(0.5, -0.025) 
         ax2.set_xlabel(TIME_FRAME[i].upper(), fontsize=20)
         if i==0:
-            ax1.set_ylabel("Sell Volume Profile Visible Range",fontsize=20)
+            ax1.set_ylabel("Volume Profile Visible Range",fontsize=20)
             ax2.set_ylabel("Buy versus Sell Quote Volume",fontsize=20)
             plt.legend(loc='upper left', prop={'size': 20})
             ax1.set_title(market, fontsize=40, y=1.03, loc='left')
