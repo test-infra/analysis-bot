@@ -81,8 +81,8 @@ def analysis_visual(client, market, TIME_FRAME_STEP, TIME_FRAME, TIME_FRAME_DURA
                                  width=0.6, alpha=1)
         ax1.plot(candles['close'].rolling(7).mean(), linewidth=4, color='violet', label='Moving Average (7)')
         ax1.plot(candles['close'].rolling(13).mean(), linewidth=4, color='orange', label='Moving Average (13)')
-        candles['vwap'] = ((candles['buyAssetVolume']+candles['sellAssetVolume'])*(candles['high']+candles['low']+candles['close'])/3).cumsum() / (candles['buyAssetVolume']+candles['sellAssetVolume']).cumsum()
-        ax1.plot(candles['vwap'], linewidth=4, color='black', label='Volume Weighted Average Price')
+        candles['VWAP'] = ((candles['buyAssetVolume']+candles['sellAssetVolume'])*(candles['high']+candles['low']+candles['close'])/3).cumsum() / (candles['buyAssetVolume']+candles['sellAssetVolume']).cumsum()
+        ax1.plot(candles['VWAP'], linewidth=4, color='indigo', label='Volume Weighted Average Price')
         ax1.yaxis.grid(True)
         for tic in ax1.xaxis.get_major_ticks():
             tic.tick1On = tic.tick2On = False
