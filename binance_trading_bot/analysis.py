@@ -137,25 +137,33 @@ def analysis_visual(client, market, TIME_FRAME_STEP, TIME_FRAME, TIME_FRAME_DURA
     f.tight_layout()
     plt.savefig('img/'+market+'.png',bbox_inches='tight')
 
-def scalp_analysis(client, market):
-    ticker = client.get_ticker(symbol=market)
-    candles = utilities.get_candles(client, 
-                                    market, 
-                                    timeFrame='5m', 
-                                    timeDuration='30 minutes ago utc')
-    result = pd.DataFrame(columns=['Duration', ': Buy ', ', Sell '])
-    for i in [2, 1, 0]:
-        result.loc[2-i] = [str(5*(i+2**i))+' mins', 
-                  "{0:,.2f}".format(candles['buyQuoteVolume'].iloc[-max(3*i, 1):].sum()),
-                  "{0:,.2f}".format(candles['sellQuoteVolume'].iloc[-max(3*i, 1):].sum())]
-    msg = '#'+market+\
-    '\nP: '+ticker['lastPrice']+\
-    ' VWAP: '+ticker['weightedAvgPrice']+\
-    ' V: '+"{0:,.2f}".format(float(ticker['quoteVolume']))
-    for i in range(len(result)):
-        msg = msg+'\n'+result[result.columns[0]].loc[i]+\
-        result.columns[1]+'*'+result[result.columns[1]].loc[i]+'*'+\
-        result.columns[2]+'*'+result[result.columns[2]].loc[i]+'*'
+def asset_analysis(client, asset):
+    marketList = pd.DataFrame(client.get_products()['data'])
+    marketList = marketList[marketList['baseAsset']==asset]
+    marketList['volume'] = pd.to_numeric(marketList['volume'])
+    marketList = marketList.sort_values('volume', ascending=False)
+    msg = ''
+    for index in marketList.index:
+        market = marketList.at[index, 'symbol']
+        candles = utilities.get_candles(client, 
+                                        market, 
+                                        timeFrame='5m', 
+                                        timeDuration='30 minutes ago utc')
+        result = pd.DataFrame(columns=['Duration', ': Buy ', ', Sell '])
+        for i in [2, 1, 0]:
+            result.loc[2-i] = [str(5*(i+2**i))+' mins', 
+                      "{0:,.2f}".format(candles['buyQuoteVolume'].iloc[-max(3*i, 1):].sum()),
+                      "{0:,.2f}".format(candles['sellQuoteVolume'].iloc[-max(3*i, 1):].sum())]
+        msg = msg+'#'+market+' '\
+        "{0:,.2f}".format(float(marketList.at[index, 'volume']))+' ('+\
+         "{0:,.2f}".format(float(marketList.at[index, 'volume']/sum(marketList['volume'])*100))+'%)'+\
+        '\nP: '+"{0:,.8f}".format(float(marketList.at[index, 'close']))+\
+        ' V: '+"{0:,.2f}".format(float(marketList.at[index, 'tradedMoney']))
+        for i in range(len(result)):
+            msg = msg+'\n'+result[result.columns[0]].loc[i]+\
+            result.columns[1]+'*'+result[result.columns[1]].loc[i]+'*'+\
+            result.columns[2]+'*'+result[result.columns[2]].loc[i]+'*'
+        msg = msg+'\n'
     return msg
 
 

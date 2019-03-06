@@ -15,9 +15,8 @@ Homepage: [https://kenhtaichinh.herokuapp.com](https://kenhtaichinh.herokuapp.co
 *Commands*
 - /t <market>
 Usage: /t qtumusdt or /t btt xlmusdt bttbnb.
-- /s <market> <time-step> <time-frame> <time-duration>
-Three last arguments can be omitted.
-Usage: /s qtumusdt or /s btt 15m 1h 3\_days\_ago\_UTC.
+- /s <asset>
+Usage: /s qtum or /s btt fet.
 - /a <change-24h-lb> <change-24h-ub> 
 Two last arguments can be omitted. 
 Usage: /a or /a 3 8 or /a -5 5.
@@ -100,30 +99,11 @@ def s(bot, update, args):
     bot.send_chat_action(chat_id=update.message.chat_id, 
                          action=telegram.ChatAction.TYPING)
     if str(update.message.from_user.username) in userList:
-        for market in args:
-            market = market.upper()
-            try:
-                msg = analysis.scalp_analysis(client, market)
-            except Exception:
-                market = market+'BTC'
-                msg = analysis.scalp_analysis(client, market)
+        for asset in args:
+            asset = asset.upper()
+            msg = analysis.scalp_analysis(client, asset)
             update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
-            try:
-                TIME_FRAME_STEP = [args[-3]]
-                TIME_FRAME = [args[-2]]
-                TIME_FRAME_DURATION = [args[-1].replace('_', ' ')]
-            except Exception:
-                TIME_FRAME_STEP = ['15m']
-                TIME_FRAME = ['1h']
-                TIME_FRAME_DURATION = ['1 days ago UTC']
-            analysis.analysis_visual(client, 
-                                     market, 
-                                     TIME_FRAME_STEP, 
-                                     TIME_FRAME, 
-                                     TIME_FRAME_DURATION)
-            bot.send_photo(chat_id=update.message.chat_id, 
-                           photo=open('img/'+market+'.png', 'rb'))
-                           
+
 def m(bot, update):
     bot.send_chat_action(chat_id=update.message.chat_id, 
                          action=telegram.ChatAction.TYPING)
