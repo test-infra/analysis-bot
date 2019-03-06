@@ -101,7 +101,7 @@ def s(bot, update, args):
     if str(update.message.from_user.username) in userList:
         for asset in args:
             asset = asset.upper()
-            msg = analysis.scalp_analysis(client, asset)
+            msg = analysis.asset_analysis(client, asset)
             update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
 
 def m(bot, update):
