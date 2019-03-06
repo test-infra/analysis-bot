@@ -110,8 +110,18 @@ P: 0.02221000 V: 79,102.74
 /n
 ```
 
-<img src="img/n.jpg" width="700">
-
+```
+*Newsflow*
+💾 Opera announces crypto browser for iOS  ([url](https://messari.io/article/opera-announces-crypto-browser-for-ios))
+🌩️ Tippin Lightning app on-boards over 14,000 users ([url](https://messari.io/article/tippin-lightning-app-on-boards-over-14-000-users))
+📩 1Broker settles suits with SEC and CTFC ([url](https://messari.io/article/1broker-settles-suits-with-sec-and-ctfc))
+🌪️ Coinbase hires AWS architect for staking and governance products ([url](https://messari.io/article/coinbase-hires-aws-architect-for-staking-and-governance-products))
+🤷🏽‍♂️ Binance CEO claims Ripple's XRP is not a security ([url](https://messari.io/article/binance-ceo-claims-ripple-s-xrp-is-not-a-security))
+🤷🏽‍♂️ Binance CEO claims Ripple's XRP is not a security ([url](https://messari.io/article/binance-ceo-claims-ripple-s-xrp-is-not-a-security))
+❓  [Analysis] Opinion: some of the top cryptocurrencies aren’t really cryptocurrencies - Kyle Torpey ([url](https://messari.io/article/analysis-opinion-some-of-the-top-cryptocurrencies-aren-t-really-cryptocurrencies-kyle-torpey))
+👍🏽 Cryptopia reopens exchange website in read-only mode ([url](https://messari.io/article/cryptopia-reopens-exchange-website-in-read-only-mode))
+🥂 Kraken futures trading nears $1 billion after Crypto Facilities acquisition ([url](https://messari.io/article/kraken-futures-trading-nears-1-billion-after-crypto-facilities-acquisition))
+```
 
 ## Licence
 MIT
