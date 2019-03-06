@@ -51,14 +51,14 @@ def a(bot, update, args):
             change_24h_lb = float(args[-2])
             change_24h_ub = float(args[-1])
         except Exception:
-            change_24h_lb = 0
+            change_24h_lb = -2
             change_24h_ub = +10
         marketList = utilities.get_market_list(client, 'BTC')
         marketList = marketList[marketList['change_24h']>=change_24h_lb]
         marketList = marketList[marketList['change_24h']<=change_24h_ub]
         TIME_FRAME_STEP = ['15m', '15m', '15m']
         TIME_FRAME = ['1d', '4h', '1h']
-        TIME_FRAME_DURATION = ['90 days ago UTC', '14 days ago UTC', '5 days ago UTC']
+        TIME_FRAME_DURATION = ['60 days ago UTC', '14 days ago UTC', '5 days ago UTC']
         for market in marketList['symbol']:
             try:
                 analysis.analysis_visual(client, 
