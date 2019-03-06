@@ -57,14 +57,6 @@ heroku ps:scale bot=1
 
 ## Screenshots
 
-### Manual
-
-```
-/help or /manual
-```
-
-<img src="img/manual.jpg" width="700">
-
 ### Market Statistics
 
 ```
@@ -80,7 +72,7 @@ BNB: 28 (+) 54 (-)
 Sat Mar  2 19:31:57 2019
 ```
 
-### Supply and Demand Imbalance
+### Supply and Demand Analysis
 
 ```
 /t fet
@@ -88,21 +80,29 @@ Sat Mar  2 19:31:57 2019
 
 <img src="img/t.jpg" width="700">
 
-### Scalping
+### Asset Analysis
 
 ```
 /s fet
 ```
 
 ```
-#FETBTC
-P: 0.00008982 VWAP: 0.00009359 V: 4,121.56
-30 mins: Buy 21.49, Sell 46.61
-15 mins: Buy 13.10, Sell 27.35
-5 mins: Buy 0.03, Sell 0.01
+#FETUSDT 39,188,999.37 (52.65%)
+P: 0.30930000 V: 12,489,154.73
+30 mins: Buy 54,471.25, Sell 115,465.21
+15 mins: Buy 17,700.61, Sell 63,930.01
+5 mins: Buy 10.90, Sell 32.13
+#FETBTC 31,886,561.00 (42.84%)
+P: 0.00008003 V: 2,636.02
+30 mins: Buy 18.80, Sell 34.01
+15 mins: Buy 11.24, Sell 27.55
+5 mins: Buy 0.00, Sell 0.14
+#FETBNB 3,359,765.30 (4.51%)
+P: 0.02221000 V: 79,102.74
+30 mins: Buy 1,231.00, Sell 1,602.24
+15 mins: Buy 493.52, Sell 505.07
+5 mins: Buy 102.12, Sell 1.69
 ```
-
-<img src="img/s.jpg" width="700">
 
 ### Newsflow
 
