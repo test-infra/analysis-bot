@@ -39,7 +39,7 @@ def active_trading(client, MIN_COUNT=10, VOL_LB=100, VOL_UB=500):
     msg = '#MARKET Last '+str(MIN_COUNT)+'min Vol. range: '+str(VOL_LB)+', '+str(VOL_UB)
     for i in accumulateAnalysis.index:
         msg = msg+'\n'+accumulateAnalysis.at[i, 'symbol'][:-3]+\
-        ' (_'+str(accumulateAnalysis.at[i, 'n_trades'])+'_) '+\
+        ' ( _'+str(accumulateAnalysis.at[i, 'n_trades'])+'_ ) '+\
         ' Buy *'+accumulateAnalysis.at[i, 'buy_volume']+'* '+\
         ' Sell *'+accumulateAnalysis.at[i, 'sell_volume']+'*'
     return accumulateAnalysis, msg
