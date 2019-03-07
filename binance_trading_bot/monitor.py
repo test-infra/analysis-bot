@@ -36,10 +36,10 @@ def active_trading(client, MIN_COUNT=10, VOL_LB=30, VOL_UB=1000):
     accumulateAnalysis['n_trades'] = marketList['n_trades']
     accumulateAnalysis['buy_volume'] = marketList['buy_volume']
     accumulateAnalysis['sell_volume'] = marketList['sell_volume']
-    msg = '#MARKET Last '+str(MIN_COUNT)+'min Vol range: '+str(VOL_LB)+', '+str(VOL_UB)
+    msg = '#MARKET Last '+str(MIN_COUNT)+'min'
     for i in accumulateAnalysis.index:
         msg = msg+'\n'+accumulateAnalysis.at[i, 'symbol'][:-3]+\
-        ' ( _'+str(accumulateAnalysis.at[i, 'n_trades'])+'_ ) '+\
+        ' ('+str(accumulateAnalysis.at[i, 'n_trades'])+') '+\
         ' Buy *'+accumulateAnalysis.at[i, 'buy_volume']+'* '+\
         ' Sell *'+accumulateAnalysis.at[i, 'sell_volume']+'*'
         if float(accumulateAnalysis.at[i, 'buy_volume'])>=float(accumulateAnalysis.at[i, 'sell_volume']):
