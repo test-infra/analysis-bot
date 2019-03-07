@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 plt.style.use('classic')
 from matplotlib.ticker import FormatStrFormatter
 import time
-from pandas.tools.plotting import table
         
 def active_trading(client, MIN_COUNT=10, VOL_LB=100, VOL_UB=500):
     marketList = pd.DataFrame(client.get_products()['data'])
@@ -42,7 +41,7 @@ def active_trading(client, MIN_COUNT=10, VOL_LB=100, VOL_UB=500):
     ax.xaxis.set_visible(False)  
     ax.yaxis.set_visible(False) 
     ax.set_frame_on(False) 
-    tab = table(ax, accumulateAnalysis, loc='upper right', colWidths=[0.17]*len(accumulateAnalysis.columns)) 
+    tab = visual.table(ax, accumulateAnalysis, loc='upper right', colWidths=[0.17]*len(accumulateAnalysis.columns)) 
     tab.auto_set_font_size(False)
     tab.set_fontsize(12)
     tab.scale(1.2, 1.2)
