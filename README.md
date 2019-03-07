@@ -53,7 +53,21 @@ git push heroku master
 heroku ps:scale bot=1 
 ```
 
-## Screenshots
+## Usage Examples
+
+### Administrator
+
+```
+/admin user
+```
+
+```
+/admin add <user-name>
+```
+
+```
+/admin remove <user-name>
+```
 
 ### Market Statistics
 
@@ -68,6 +82,35 @@ BTC: 58 (+) 87 (-)
 USDⓈ: 11 (+) 66 (-)
 BNB: 28 (+) 54 (-)
 Sat Mar  2 19:31:57 2019
+```
+
+### Market Monitoring
+
+```
+/x
+```
+
+```
+#MARKET Last 10min
+APPC (4569)  Buy 78.36  Sell 30.06 (+)
+MITH (982)  Buy 23.73  Sell 23.89 (-)
+LOOM (597)  Buy 8.25  Sell 2.47 (+)
+DLT (444)  Buy 2.60  Sell 1.74 (+)
+LUN (403)  Buy 2.13  Sell 5.63 (-)
+REN (222)  Buy 1.25  Sell 4.50 (-)
+LEND (220)  Buy 1.76  Sell 2.25 (-)
+ZRX (213)  Buy 4.89  Sell 3.65 (+)
+STEEM (212)  Buy 2.13  Sell 2.93 (-)
+GO (184)  Buy 1.16  Sell 3.27 (-)
+POLY (169)  Buy 2.75  Sell 2.04 (+)
+ADA (155)  Buy 7.08  Sell 4.98 (+)
+MDA (146)  Buy 0.71  Sell 6.68 (-)
+IOTA (145)  Buy 0.77  Sell 2.82 (-)
+WAVES (141)  Buy 2.94  Sell 1.29 (+)
+BCHABC (135)  Buy 2.76  Sell 3.32 (-)
+POE (128)  Buy 5.06  Sell 1.46 (+)
+XLM (121)  Buy 2.41  Sell 1.95 (+)
+QLC (110)  Buy 3.17  Sell 1.03 (+)
 ```
 
 ### Supply and Demand Analysis
