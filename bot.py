@@ -20,6 +20,9 @@ Usage: /s qtum or /s btt fet.
 - /a <change-24h-lb> <change-24h-ub> 
 Two last arguments can be omitted. 
 Usage: /a or /a 3 8 or /a -5 5.
+- /x <minute-count> <vol-lb> <vol-ub>
+Three last arguments can be omitted. 
+Usage: /x or /x 15 75 1000.
 - /m 
 Usage: /m.
 - /n
@@ -111,6 +114,21 @@ def m(bot, update):
         msg = monitor.market_change(client)
         update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
         
+def x(bot, update, args):
+    bot.send_chat_action(chat_id=update.message.chat_id, 
+                         action=telegram.ChatAction.TYPING)
+    if str(update.message.from_user.username) in userList:
+        try:
+            MIN_COUNT = args[-3]
+            VOL_LB = args[-2]
+            VOL_UB = args[-1]
+        except:
+            MIN_COUNT = 10
+            VOL_LB = 100
+            VOL_UB = 500
+        msg = monitor.active_trading(client, MIN_COUNT, VOL_LB, VOL_UB)
+        update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
+        
 def n(bot, update):
     bot.send_chat_action(chat_id=update.message.chat_id, 
                          action=telegram.ChatAction.TYPING)
@@ -156,6 +174,7 @@ def main():
     dp.add_handler(CommandHandler("a", a, pass_args=True))
     dp.add_handler(CommandHandler("t", t, pass_args=True))
     dp.add_handler(CommandHandler("s", s, pass_args=True))
+    dp.add_handler(CommandHandler("x", x, pass_args=True))
     dp.add_handler(CommandHandler("admin", admin, pass_args=True))
     updater.start_polling()
     updater.idle()
