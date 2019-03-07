@@ -127,7 +127,9 @@ def x(bot, update, args):
             VOL_LB = 100
             VOL_UB = 500
         msg = monitor.active_trading(client, MIN_COUNT, VOL_LB, VOL_UB)
-        update.message.reply_text(msg, parse_mode=ParseMode.HTML)
+        bot.send_message(chat_id=update.message.chat_id, 
+                         text=msg, 
+                         parse_mode=ParseMode.HTML)
         
 def n(bot, update):
     bot.send_chat_action(chat_id=update.message.chat_id, 
