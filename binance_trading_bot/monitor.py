@@ -36,12 +36,9 @@ def active_trading(client, MIN_COUNT=10, VOL_LB=100, VOL_UB=500):
     accumulateAnalysis['n_trades'] = marketList['n_trades']
     accumulateAnalysis['buy_volume'] = marketList['buy_volume']
     accumulateAnalysis['sell_volume'] = marketList['sell_volume']
-    msg = '#MARKET\nmarket n-trades buy-vol sell-vol'
-    for i in accumulateAnalysis.index:
-        msg = msg+'\n'+accumulateAnalysis.at[i, 'symbol'][:-3]+'    '+\
-        str(accumulateAnalysis.at[i, 'n_trades'])+'    '+\
-        "{0:,.2f}".format(accumulateAnalysis.at[i, 'buy_volume'])+'    '+\
-        "{0:,.2f}".format(accumulateAnalysis.at[i, 'sell_volume'])
+    accumulateAnalysis = accumulateAnalysis.set_index('symbol')
+    accumulateAnalysis = accumulateAnalysis.applymap(int)
+    msg = '<pre>'+accumulateAnalysis.to_html()+'</pre>'
     return msg
 
 def market_change(client):

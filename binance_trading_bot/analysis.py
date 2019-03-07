@@ -135,7 +135,7 @@ def analysis_visual(client, market, TIME_FRAME_STEP, TIME_FRAME, TIME_FRAME_DURA
             plt.legend(loc='upper left', prop={'size': 20})
             ax1.set_title(market, fontsize=40, y=1.03, loc='left')
     f.tight_layout()
-    plt.savefig('img/'+market+'.png',bbox_inches='tight')
+    plt.savefig('img/'+market+'.png', bbox_inches='tight')
 
 def asset_analysis(client, asset):
     marketList = pd.DataFrame(client.get_products()['data'])
