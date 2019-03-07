@@ -128,7 +128,7 @@ def x(bot, update, args):
             VOL_UB = 500
         msg = monitor.active_trading(client, MIN_COUNT, VOL_LB, VOL_UB)
         bot.send_message(chat_id=update.message.chat_id, 
-                         text='<b>bold</b> <i>italic</i> <a href="http://google.com">link</a>.', 
+                         text=msg, 
                          parse_mode=ParseMode.HTML)
         
 def n(bot, update):
