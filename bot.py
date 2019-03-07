@@ -126,9 +126,9 @@ def x(bot, update, args):
             MIN_COUNT = 10
             VOL_LB = 100
             VOL_UB = 500
-        monitor.active_trading(client, MIN_COUNT, VOL_LB, VOL_UB)
-        bot.send_photo(chat_id=update.message.chat_id, 
-                   photo=open('img/monitor.png', 'rb'))
+        result = monitor.active_trading(client, MIN_COUNT, VOL_LB, VOL_UB)
+        msg = str(result)
+        update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
         
 def n(bot, update):
     bot.send_chat_action(chat_id=update.message.chat_id, 

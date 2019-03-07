@@ -41,19 +41,3 @@ def candlestick2_ohlc(ax, opens, highs, lows, closes,
         ax.add_collection(rangeCollection)
     ax.add_collection(barCollection)
     return rangeCollection, barCollection
-
-def table(ax, data, rowLabels=None, colLabels=None, **kwargs):
-
-    if rowLabels is None:
-        rowLabels = data.index
-
-    if colLabels is None:
-        colLabels = data.columns
-
-    cellText = data.values
-
-    import matplotlib.table
-    table = matplotlib.table.table(ax, cellText=cellText,
-                                   rowLabels=rowLabels,
-                                   colLabels=colLabels, **kwargs)
-    return table
