@@ -119,9 +119,9 @@ def x(bot, update, args):
                          action=telegram.ChatAction.TYPING)
     if str(update.message.from_user.username) in userList:
         try:
-            MIN_COUNT = args[-3]
-            VOL_LB = args[-2]
-            VOL_UB = args[-1]
+            MIN_COUNT = int(args[-3])
+            VOL_LB = float(args[-2])
+            VOL_UB = float(args[-1])
         except:
             MIN_COUNT = 10
             VOL_LB = 100
