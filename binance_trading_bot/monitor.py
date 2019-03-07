@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 plt.style.use('classic')
 from matplotlib.ticker import FormatStrFormatter
 import time
+from pandas.tools.plotting import table
         
 def active_trading(client, MIN_COUNT=10, VOL_LB=100, VOL_UB=500):
     marketList = pd.DataFrame(client.get_products()['data'])
@@ -20,8 +21,8 @@ def active_trading(client, MIN_COUNT=10, VOL_LB=100, VOL_UB=500):
         try:
             candles = utilities.get_candles(client, coin, '1m', '1 hour ago UTC')
             n_trades.append(sum(candles['n_trades'].iloc[-MIN_COUNT:]))
-            buy_volume.append(sum(candles['buyQuoteVolume'].iloc[-MIN_COUNT:]))
-            sell_volume.append(sum(candles['sellQuoteVolume'].iloc[-MIN_COUNT:]))
+            buy_volume.append("{0:,.2f}".format(sum(candles['buyQuoteVolume'].iloc[-MIN_COUNT:])))
+            sell_volume.append("{0:,.2f}".format(sum(candles['sellQuoteVolume'].iloc[-MIN_COUNT:])))
         except Exception:
             n_trades.append(0)
             buy_volume.append(0)
@@ -37,9 +38,16 @@ def active_trading(client, MIN_COUNT=10, VOL_LB=100, VOL_UB=500):
     accumulateAnalysis['buy_volume'] = marketList['buy_volume']
     accumulateAnalysis['sell_volume'] = marketList['sell_volume']
     accumulateAnalysis = accumulateAnalysis.set_index('symbol')
-    accumulateAnalysis = accumulateAnalysis.applymap(int)
-    msg = accumulateAnalysis.to_html()
-    return msg
+    fig, ax = plt.subplots() 
+    ax.xaxis.set_visible(False)  
+    ax.yaxis.set_visible(False) 
+    ax.set_frame_on(False) 
+    tab = table(ax, accumulateAnalysis, loc='upper right', colWidths=[0.17]*len(accumulateAnalysis.columns)) 
+    tab.auto_set_font_size(False)
+    tab.set_fontsize(12)
+    tab.scale(1.2, 1.2)
+    plt.savefig('img/monitor.png', transparent=True)
+    return accumulateAnalysis
 
 def market_change(client):
     marketList = pd.DataFrame(client.get_products()['data'])

@@ -149,7 +149,7 @@ def asset_analysis(client, asset):
                                         market, 
                                         timeFrame='5m', 
                                         timeDuration='30 minutes ago utc')
-        result = pd.DataFrame(columns=['Duration', ': Buy ', ', Sell '])
+        result = pd.DataFrame(columns=['Duration', ': Buy ', ' Sell '])
         for i in [2, 1, 0]:
             result.loc[2-i] = [str(5*(i+2**i))+' mins', 
                       "{0:,.2f}".format(candles['buyQuoteVolume'].iloc[-max(3*i, 1):].sum()),
