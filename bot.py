@@ -126,8 +126,7 @@ def x(bot, update, args):
             MIN_COUNT = 10
             VOL_LB = 100
             VOL_UB = 500
-        result = monitor.active_trading(client, MIN_COUNT, VOL_LB, VOL_UB)
-        msg = str(result)
+        accumulateAnalysis, msg = monitor.active_trading(client, MIN_COUNT, VOL_LB, VOL_UB)
         update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
         
 def n(bot, update):

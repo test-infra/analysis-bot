@@ -37,7 +37,13 @@ def active_trading(client, MIN_COUNT=10, VOL_LB=100, VOL_UB=500):
     accumulateAnalysis['buy_volume'] = marketList['buy_volume']
     accumulateAnalysis['sell_volume'] = marketList['sell_volume']
     accumulateAnalysis = accumulateAnalysis.set_index('symbol')
-    return accumulateAnalysis
+    msg = '#MARKET'
+    for i in accumulateAnalysis.index:
+        msg = msg+'\n'+accumulateAnalysis.at[i, 'symbol'][:-3]+\
+        ' (_'+str(accumulateAnalysis.at[i, 'n_trades'])+'_) '+\
+        ' Buy *'+accumulateAnalysis.at[i, 'buy_volume']+'* '+\
+        ' Sell *'+accumulateAnalysis.at[i, 'sell_volume']+'*'
+    return accumulateAnalysis, msg
 
 def market_change(client):
     marketList = pd.DataFrame(client.get_products()['data'])
