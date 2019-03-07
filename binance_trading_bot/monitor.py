@@ -8,7 +8,7 @@ plt.style.use('classic')
 from matplotlib.ticker import FormatStrFormatter
 import time
         
-def active_trading(client, MIN_COUNT=10, VOL_LB=100, VOL_UB=500):
+def active_trading(client, MIN_COUNT=10, VOL_LB=30, VOL_UB=1000):
     marketList = pd.DataFrame(client.get_products()['data'])
     marketList = marketList[marketList['marketName']=='BTC']
     marketList = marketList[marketList['tradedMoney']<=VOL_UB]
@@ -36,12 +36,16 @@ def active_trading(client, MIN_COUNT=10, VOL_LB=100, VOL_UB=500):
     accumulateAnalysis['n_trades'] = marketList['n_trades']
     accumulateAnalysis['buy_volume'] = marketList['buy_volume']
     accumulateAnalysis['sell_volume'] = marketList['sell_volume']
-    msg = '#MARKET Last '+str(MIN_COUNT)+'min < Vol range: '+str(VOL_LB)+', '+str(VOL_UB)+'BTC >'
+    msg = '#MARKET Last '+str(MIN_COUNT)+'min Vol range: '+str(VOL_LB)+', '+str(VOL_UB)
     for i in accumulateAnalysis.index:
         msg = msg+'\n'+accumulateAnalysis.at[i, 'symbol'][:-3]+\
         ' ( _'+str(accumulateAnalysis.at[i, 'n_trades'])+'_ ) '+\
         ' Buy *'+accumulateAnalysis.at[i, 'buy_volume']+'* '+\
         ' Sell *'+accumulateAnalysis.at[i, 'sell_volume']+'*'
+        if float(accumulateAnalysis.at[i, 'buy_volume'])>=float(accumulateAnalysis.at[i, 'sell_volume']):
+            msg = msg+' (+)'
+        else:
+            msg = msg+' (-)'
     return accumulateAnalysis, msg
 
 def market_change(client):

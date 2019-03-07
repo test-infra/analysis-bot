@@ -154,9 +154,9 @@ def asset_analysis(client, asset):
             result.loc[2-i] = [str(5*(i+2**i))+' mins', 
                       "{0:,.2f}".format(candles['buyQuoteVolume'].iloc[-max(3*i, 1):].sum()),
                       "{0:,.2f}".format(candles['sellQuoteVolume'].iloc[-max(3*i, 1):].sum())]
-        msg = msg+'#'+market+' < '\
+        msg = msg+'#'+market+' '\
         "{0:,.2f}".format(float(marketList.at[index, 'volume']))+' ('+\
-         "{0:,.2f}".format(float(marketList.at[index, 'volume']/sum(marketList['volume'])*100))+'%) >'+\
+         "{0:,.2f}".format(float(marketList.at[index, 'volume']/sum(marketList['volume'])*100))+'%)'+\
         '\nP: '+"{0:,.8f}".format(float(marketList.at[index, 'close']))+\
         ' V: '+"{0:,.2f}".format(float(marketList.at[index, 'tradedMoney']))
         for i in range(len(result)):

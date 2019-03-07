@@ -124,8 +124,8 @@ def x(bot, update, args):
             VOL_UB = float(args[-1])
         except:
             MIN_COUNT = 10
-            VOL_LB = 100
-            VOL_UB = 500
+            VOL_LB = 30
+            VOL_UB = 1000
         accumulateAnalysis, msg = monitor.active_trading(client, MIN_COUNT, VOL_LB, VOL_UB)
         update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
         
