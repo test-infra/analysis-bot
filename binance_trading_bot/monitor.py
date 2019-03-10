@@ -56,11 +56,13 @@ def market_change(client):
         baseAssetList = list(set(marketList[marketList['parentMarket']==parentMarket]['quoteAsset']))
         positiveCount = 0
         negativeCount = 0
+        neutralCount = 0
         for baseAsset in baseAssetList:
             marketList_ = utilities.get_market_list(client, baseAsset)
-            positiveCount = positiveCount+len(marketList_[marketList_['change_24h']>=0.])
-            negativeCount = negativeCount+len(marketList_[marketList_['change_24h']<0.])
-        msg = msg+'\n'+parentMarket+': '+str(positiveCount)+' (+) '+str(negativeCount)+' (-)'
+            positiveCount = positiveCount+len(marketList_[marketList_['change_24h']>=1.])
+            negativeCount = negativeCount+len(marketList_[marketList_['change_24h']<=-1.])
+            neutralCount = neutralCount+len(marketList_)-len(marketList_[marketList_['change_24h']>=1.])-len(marketList_[marketList_['change_24h']<=-1.])
+        msg = msg+'\n'+parentMarket+': '+str(positiveCount)+' (+) '+str(negativeCount)+' (-) '+str(neutralCount)+' (0)'
     msg = msg+'\n'+time.ctime()
     return msg
         
