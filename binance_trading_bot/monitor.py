@@ -51,18 +51,15 @@ def active_trading(client, MIN_COUNT=10, VOL_LB=30, VOL_UB=1000):
 def market_change(client):
     marketList = pd.DataFrame(client.get_products()['data'])
     parentMarketList = list(set(marketList['parentMarket'].tolist()))
-    msg = '#MARKET '
+    msg = '#MARKET '+time.ctime()
     for parentMarket in parentMarketList:
         baseAssetList = list(set(marketList[marketList['parentMarket']==parentMarket]['quoteAsset']))
         positiveCount = 0
         negativeCount = 0
-        neutralCount = 0
         for baseAsset in baseAssetList:
             marketList_ = utilities.get_market_list(client, baseAsset)
-            positiveCount = positiveCount+len(marketList_[marketList_['change_24h']>=1.])
-            negativeCount = negativeCount+len(marketList_[marketList_['change_24h']<=-1.])
-            neutralCount = neutralCount+len(marketList_)-len(marketList_[marketList_['change_24h']>=1.])-len(marketList_[marketList_['change_24h']<=-1.])
-        msg = msg+'\n'+parentMarket+': '+str(positiveCount)+' (+) '+str(negativeCount)+' (-) '+str(neutralCount)+' (0)'
-    msg = msg+'\n'+time.ctime()
+            positiveCount = positiveCount+len(marketList_[marketList_['change_24h']>=0.])
+            negativeCount = negativeCount+len(marketList_[marketList_['change_24h']<0.])
+        msg = msg+'\n'+parentMarket+': '+str(positiveCount)+' (+) '+str(negativeCount)+' (-)'
     return msg
         
