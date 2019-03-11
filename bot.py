@@ -53,8 +53,8 @@ def a(bot, update, args):
             change_24h_lb = float(args[-2])
             change_24h_ub = float(args[-1])
         except Exception:
-            change_24h_lb = -2
-            change_24h_ub = +10
+            change_24h_lb = +3
+            change_24h_ub = +1000
         marketList = utilities.get_market_list(client, 'BTC')
         marketList = marketList[marketList['change_24h']>=change_24h_lb]
         marketList = marketList[marketList['change_24h']<=change_24h_ub]
