@@ -1,6 +1,22 @@
 import numpy as np
 import pandas as pd
 
+def get_market_list(client, *args):
+    marketList = pd.DataFrame(client.get_products()['data'])
+    if len(args)>0:
+        quoteBase = args[0]
+        marketList = marketList[marketList['quoteAsset']==quoteBase]
+    marketList = marketList[['symbol', 'tradedMoney']]
+    tickers = pd.DataFrame(client.get_ticker())
+    tickers['priceChangePercent'] = pd.to_numeric(tickers['priceChangePercent'])
+    tickerList = pd.DataFrame()
+    tickerList['symbol'] = tickers['symbol']
+    tickerList['n_trades_24h'] = tickers['count']
+    tickerList['change_24h'] = tickers['priceChangePercent']
+    marketList = pd.merge(marketList, tickerList, on='symbol')
+    marketList = marketList.sort_values('change_24h', ascending=False) 
+    return marketList
+
 def get_trades(client, market, timeDuration, timeFrame):
     klines = client.get_historical_klines(symbol=market, 
                                           interval=timeFrame, 
