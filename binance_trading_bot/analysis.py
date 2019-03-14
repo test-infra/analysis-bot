@@ -1,8 +1,6 @@
 import numpy as np
 import pandas as pd
-from datetime import datetime
 from binance_trading_bot import utilities, visual
-import seaborn as sns
 import matplotlib.pyplot as plt
 plt.style.use('classic')
 from matplotlib.ticker import FormatStrFormatter
