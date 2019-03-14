@@ -3,7 +3,7 @@ import telegram
 from telegram import ParseMode
 from telegram.ext import Updater, CommandHandler
 from binance.client import Client
-from binance_trading_bot import utilities, analysis, monitor, news
+from binance_trading_bot import utilities, analysis, monitor
 
 MANUAL_TEXT = """A Telegram chatbot for data-driven analytics of crypto-market on Binance.
 Homepage: [https://kenhtaichinh.herokuapp.com](https://kenhtaichinh.herokuapp.com).
