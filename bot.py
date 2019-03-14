@@ -81,11 +81,11 @@ def m(bot, update):
 def n(bot, update):
     bot.send_chat_action(chat_id=update.message.chat_id, 
                          action=telegram.ChatAction.TYPING)
-    if str(update.message.from_user.username) in userList:
-        msg = news.newsflow()
-        update.message.reply_text(msg, 
-                                  parse_mode=ParseMode.MARKDOWN,
-                                  disable_web_page_preview=True)
+    msg = news.newsflow()
+    bot.send_message(chat_id=update.message.chat_id, 
+                     text=msg, 
+                     parse_mode=ParseMode.MARKDOWN, 
+                     disable_web_page_preview=True)
         
 def admin(bot, update, args):
     bot.send_chat_action(chat_id=update.message.chat_id, 
