@@ -10,7 +10,6 @@ Homepage: [https://kenhtaichinh.herokuapp.com](https://kenhtaichinh.herokuapp.co
 *Features*
 - Altcoin analysis: Demand versus supply imbalance.
 - Market movement: Statistics, Indexes.
-- Newsflow: Curated articles.
 *Commands*
 - /t <market>
 Usage: /t qtumusdt or /t btt xlmusdt bttbnb.
@@ -18,8 +17,6 @@ Usage: /t qtumusdt or /t btt xlmusdt bttbnb.
 Usage: /s qtum or /s btt fet.
 - /m 
 Usage: /m.
-- /n
-Usage: /n.
 *Supports*
 Start trading on [Binance](https://www.binance.com/?ref=13339920), [Huobi](https://www.huobi.br.com/en-us/topic/invited/?invite_code=x93k3) or [Coinbase](https://www.coinbase.com/join/581a706d01bc8b00dd1d1737).
 Use the [Brave](https://brave.com/ken335) privacy browser to earn BAT token.
@@ -78,15 +75,6 @@ def m(bot, update):
         msg = monitor.market_change(client)
         update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
         
-def n(bot, update):
-    bot.send_chat_action(chat_id=update.message.chat_id, 
-                         action=telegram.ChatAction.TYPING)
-    msg = news.newsflow()
-    bot.send_message(chat_id=update.message.chat_id, 
-                     text=msg, 
-                     parse_mode=ParseMode.MARKDOWN, 
-                     disable_web_page_preview=True)
-        
 def admin(bot, update, args):
     bot.send_chat_action(chat_id=update.message.chat_id, 
                          action=telegram.ChatAction.TYPING)
@@ -119,7 +107,6 @@ def main():
     dp.add_handler(CommandHandler("start", manual))
     dp.add_handler(CommandHandler("help", manual))
     dp.add_handler(CommandHandler("m", m))
-    dp.add_handler(CommandHandler("n", n))
     dp.add_handler(CommandHandler("t", t, pass_args=True))
     dp.add_handler(CommandHandler("s", s, pass_args=True))
     dp.add_handler(CommandHandler("admin", admin, pass_args=True))
