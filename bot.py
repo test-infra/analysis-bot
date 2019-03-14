@@ -95,7 +95,6 @@ def main():
     dp.add_handler(CommandHandler("n", n))
     dp.add_handler(CommandHandler("t", t, pass_args=True))
     dp.add_handler(CommandHandler("s", s, pass_args=True))
-    dp.add_handler(CommandHandler("admin", admin, pass_args=True))
     updater.start_polling()
     updater.idle()
 
