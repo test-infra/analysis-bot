@@ -39,9 +39,9 @@ def t(bot, update, args):
                          action=telegram.ChatAction.TYPING)
     for market in args:
         market = market.upper()
-        TIME_FRAME_STEP = ['15m', '15m', '15m']
-        TIME_FRAME = ['1d', '4h', '1h']
-        TIME_FRAME_DURATION = ['90 days ago UTC', '14 days ago UTC', '5 days ago UTC']
+        TIME_FRAME_STEP = ['15m', '15m']
+        TIME_FRAME = ['1d', '4h']
+        TIME_FRAME_DURATION = ['90 days ago UTC', '14 days ago UTC']
         try:
             analysis.analysis_visual(client, 
                                      market, 
