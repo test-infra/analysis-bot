@@ -16,12 +16,6 @@ Homepage: [https://kenhtaichinh.herokuapp.com](https://kenhtaichinh.herokuapp.co
 Usage: /t qtumusdt or /t btt xlmusdt bttbnb.
 - /s <asset>
 Usage: /s qtum or /s btt fet.
-- /a <change-24h-lb> <change-24h-ub> 
-Two last arguments can be omitted. 
-Usage: /a or /a 3 8 or /a -5 5.
-- /x <minute-count> <vol-lb> <vol-ub>
-Three last arguments can be omitted. 
-Usage: /x or /x 15 75 1000.
 - /m 
 Usage: /m.
 - /n
@@ -42,34 +36,6 @@ TELEGRAM_ADMIN_USERNAME = os.environ['TELEGRAM_ADMIN_USERNAME']
 client = Client(BINANCE_API_KEY, BINANCE_SECRET_KEY)
 
 userList = [TELEGRAM_ADMIN_USERNAME]
-
-def a(bot, update, args):
-    bot.send_chat_action(chat_id=update.message.chat_id, 
-                         action=telegram.ChatAction.TYPING)
-    if str(update.message.from_user.username) in userList:
-        try:
-            change_24h_lb = float(args[-2])
-            change_24h_ub = float(args[-1])
-        except Exception:
-            change_24h_lb = -5
-            change_24h_ub = +5
-        marketList = utilities.get_market_list(client, 'BTC')
-        marketList = marketList[marketList['change_24h']>=change_24h_lb]
-        marketList = marketList[marketList['change_24h']<=change_24h_ub]
-        TIME_FRAME_STEP = ['15m', '15m']
-        TIME_FRAME = ['1d', '4h']
-        TIME_FRAME_DURATION = ['60 days ago UTC', '14 days ago UTC']
-        for market in marketList['symbol']:
-            try:
-                analysis.analysis_visual(client, 
-                                         market, 
-                                         TIME_FRAME_STEP, 
-                                         TIME_FRAME, 
-                                         TIME_FRAME_DURATION)
-                bot.send_photo(chat_id=update.message.chat_id, 
-                               photo=open('img/'+market+'.png', 'rb'))
-            except Exception:
-                pass
 
 def t(bot, update, args):
     bot.send_chat_action(chat_id=update.message.chat_id, 
@@ -110,21 +76,6 @@ def m(bot, update):
                          action=telegram.ChatAction.TYPING)
     if str(update.message.from_user.username) in userList:
         msg = monitor.market_change(client)
-        update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
-        
-def x(bot, update, args):
-    bot.send_chat_action(chat_id=update.message.chat_id, 
-                         action=telegram.ChatAction.TYPING)
-    if str(update.message.from_user.username) in userList:
-        try:
-            MIN_COUNT = int(args[-3])
-            VOL_LB = float(args[-2])
-            VOL_UB = float(args[-1])
-        except:
-            MIN_COUNT = 10
-            VOL_LB = 30
-            VOL_UB = 1000
-        accumulateAnalysis, msg = monitor.active_trading(client, MIN_COUNT, VOL_LB, VOL_UB)
         update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
         
 def n(bot, update):
@@ -169,10 +120,8 @@ def main():
     dp.add_handler(CommandHandler("help", manual))
     dp.add_handler(CommandHandler("m", m))
     dp.add_handler(CommandHandler("n", n))
-    dp.add_handler(CommandHandler("a", a, pass_args=True))
     dp.add_handler(CommandHandler("t", t, pass_args=True))
     dp.add_handler(CommandHandler("s", s, pass_args=True))
-    dp.add_handler(CommandHandler("x", x, pass_args=True))
     dp.add_handler(CommandHandler("admin", admin, pass_args=True))
     updater.start_polling()
     updater.idle()
