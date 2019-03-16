@@ -58,22 +58,23 @@ def t(bot, update, args):
                                          TIME_FRAME_DURATION)
             bot.send_photo(chat_id=update.message.chat_id, 
                        photo=open('img/'+market+'.png', 'rb'))
+    else:
+        msg = 'Only for registered users.'
+        update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
                            
 def s(bot, update, args):
     bot.send_chat_action(chat_id=update.message.chat_id, 
                          action=telegram.ChatAction.TYPING)
-    if str(update.message.from_user.username) in userList:
-        for asset in args:
-            asset = asset.upper()
-            msg = analysis.asset_analysis(client, asset)
-            update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
+    for asset in args:
+        asset = asset.upper()
+        msg = analysis.asset_analysis(client, asset)
+        update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
 
 def m(bot, update):
     bot.send_chat_action(chat_id=update.message.chat_id, 
                          action=telegram.ChatAction.TYPING)
-    if str(update.message.from_user.username) in userList:
-        msg = monitor.market_change(client)
-        update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
+    msg = monitor.market_change(client)
+    update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
         
 def admin(bot, update, args):
     bot.send_chat_action(chat_id=update.message.chat_id, 
