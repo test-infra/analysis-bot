@@ -7,18 +7,14 @@ from binance_trading_bot import utilities, analysis, monitor
 
 MANUAL_TEXT = """A Telegram chatbot for data-driven analytics of crypto-market on Binance.
 Homepage: [https://kenhtaichinh.herokuapp.com](https://kenhtaichinh.herokuapp.com).
-*Features*
-- Altcoin analysis: Demand versus supply imbalance.
-- Market movement: Statistics, Indexes.
-- Market-maker analysis: Stop-hunt detection.
 *Commands*
-- /t <market>
+- /t <market> : demand versus supply imbalance.
 Usage: /t qtumusdt or /t btt xlmusdt bttbnb.
-- /s <asset>
+- /s <asset> : asset analysis.
 Usage: /s qtum or /s btt fet.
-- /m 
+- /m : market statistics.
 Usage: /m.
-- /x 
+- /x : market-maker stop-hunt.
 Usage: /x.
 *Supports*
 Start trading on [Binance](https://www.binance.com/?ref=13339920), [Huobi](https://www.huobi.br.com/en-us/topic/invited/?invite_code=x93k3) or [Coinbase](https://www.coinbase.com/join/581a706d01bc8b00dd1d1737).
@@ -75,7 +71,7 @@ def x(bot, update, args):
             TIME_FRAME_DURATION = args[-1]+' days ago UTC'
             msg = monitor.stop_hunt(client, stophuntRatio, TIME_FRAME, TIME_FRAME_DURATION)
         except Exception:
-            msg = monitor.stop_hunt(client, stophuntRatio=.7, TIME_FRAME='1h', TIME_FRAME_DURATION='7 days ago UTC')
+            msg = monitor.stop_hunt(client, stophuntRatio=.925, TIME_FRAME='4h', TIME_FRAME_DURATION='7 days ago UTC')
     else:
         msg = 'Only for registered users.'
     update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
