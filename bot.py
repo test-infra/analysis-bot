@@ -71,7 +71,7 @@ def x(bot, update, args):
             TIME_FRAME_DURATION = args[-1]+' days ago UTC'
             msg = monitor.stop_hunt(client, stophuntRatio, TIME_FRAME, TIME_FRAME_DURATION)
         except Exception:
-            msg = monitor.stop_hunt(client, stophuntRatio=.7, TIME_FRAME='1h', TIME_FRAME_DURATION='1 days ago UTC')
+            msg = monitor.stop_hunt(client, stophuntRatio=.85, TIME_FRAME='1h', TIME_FRAME_DURATION='1 days ago UTC')
     else:
         msg = 'Only for registered users.'
     update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
