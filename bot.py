@@ -14,8 +14,6 @@ Usage: /t qtumusdt or /t btt xlmusdt bttbnb.
 Usage: /s qtum or /s btt fet.
 - /m : market statistics.
 Usage: /m.
-- /x : market-maker stop-hunt.
-Usage: /x.
 *Supports*
 Start trading on [Binance](https://www.binance.com/?ref=13339920), [Huobi](https://www.huobi.br.com/en-us/topic/invited/?invite_code=x93k3) or [Coinbase](https://www.coinbase.com/join/581a706d01bc8b00dd1d1737).
 Use the [Brave](https://brave.com/ken335) privacy browser to earn BAT token.
@@ -60,21 +58,6 @@ def t(bot, update, args):
     else:
         msg = 'Only for registered users.'
         update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
-        
-def x(bot, update, args):
-    bot.send_chat_action(chat_id=update.message.chat_id, 
-                         action=telegram.ChatAction.TYPING)
-    if str(update.message.from_user.username) in userList:
-        try:
-            stophuntRatio = float(args[-3])
-            TIME_FRAME = args[-2]
-            TIME_FRAME_DURATION = args[-1]+' days ago UTC'
-            msg = monitor.stop_hunt(client, stophuntRatio, TIME_FRAME, TIME_FRAME_DURATION)
-        except Exception:
-            msg = monitor.stop_hunt(client, stophuntRatio=.85, TIME_FRAME='1h', TIME_FRAME_DURATION='1 days ago UTC')
-    else:
-        msg = 'Only for registered users.'
-    update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
 
 def s(bot, update, args):
     bot.send_chat_action(chat_id=update.message.chat_id, 
@@ -124,7 +107,6 @@ def main():
     dp.add_handler(CommandHandler("m", m))
     dp.add_handler(CommandHandler("t", t, pass_args=True))
     dp.add_handler(CommandHandler("s", s, pass_args=True))
-    dp.add_handler(CommandHandler("x", x, pass_args=True))
     dp.add_handler(CommandHandler("admin", admin, pass_args=True))
     updater.start_polling()
     updater.idle()
