@@ -5,8 +5,7 @@ from telegram.ext import Updater, CommandHandler
 from binance.client import Client
 from binance_trading_bot import utilities, analysis, monitor
 
-MANUAL_TEXT = """A Telegram chatbot for data-driven analytics of crypto-market on Binance.
-Homepage: [https://kenhtaichinh.herokuapp.com](https://kenhtaichinh.herokuapp.com).
+MANUAL_TEXT = """Data-driven analytics of crypto-market on Binance.
 *Commands*
 - /t <market> : demand versus supply imbalance.
 Usage: /t qtumusdt or /t btt xlmusdt bttbnb.
@@ -20,6 +19,8 @@ Use the [Brave](https://brave.com/ken335) privacy browser to earn BAT token.
 BTC tipjar: [1DrEMhMP5rAytKyKXRzc6szTcUX8bZzZgq](1DrEMhMP5rAytKyKXRzc6szTcUX8bZzZgq).
 *Contact*
 @tjeuphi
+*Website*
+[https://kenhtaichinh.herokuapp.com](https://kenhtaichinh.herokuapp.com).
  """
 
 TELEGRAM_TOKEN = os.environ['TELEGRAM_TOKEN']
@@ -29,35 +30,29 @@ TELEGRAM_ADMIN_USERNAME = os.environ['TELEGRAM_ADMIN_USERNAME']
 
 client = Client(BINANCE_API_KEY, BINANCE_SECRET_KEY)
 
-userList = [TELEGRAM_ADMIN_USERNAME]
-
 def t(bot, update, args):
     bot.send_chat_action(chat_id=update.message.chat_id, 
                          action=telegram.ChatAction.TYPING)
-    if str(update.message.from_user.username) in userList:
-        for market in args:
-            market = market.upper()
-            TIME_FRAME_STEP = ['15m', '15m']
-            TIME_FRAME = ['1d', '4h']
-            TIME_FRAME_DURATION = ['90 days ago UTC', '14 days ago UTC']
-            try:
-                analysis.analysis_visual(client, 
-                                         market, 
-                                         TIME_FRAME_STEP, 
-                                         TIME_FRAME, 
-                                         TIME_FRAME_DURATION)
-            except Exception:
-                market = market+'BTC'
-                analysis.analysis_visual(client, 
-                                         market, 
-                                         TIME_FRAME_STEP, 
-                                         TIME_FRAME, 
-                                         TIME_FRAME_DURATION)
-            bot.send_photo(chat_id=update.message.chat_id, 
-                       photo=open('img/'+market+'.png', 'rb'))
-    else:
-        msg = 'Only for registered users.'
-        update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
+    for market in args:
+        market = market.upper()
+        TIME_FRAME_STEP = ['15m', '15m']
+        TIME_FRAME = ['1d', '4h']
+        TIME_FRAME_DURATION = ['90 days ago UTC', '14 days ago UTC']
+        try:
+            analysis.analysis_visual(client, 
+                                     market, 
+                                     TIME_FRAME_STEP, 
+                                     TIME_FRAME, 
+                                     TIME_FRAME_DURATION)
+        except Exception:
+            market = market+'BTC'
+            analysis.analysis_visual(client, 
+                                     market, 
+                                     TIME_FRAME_STEP, 
+                                     TIME_FRAME, 
+                                     TIME_FRAME_DURATION)
+        bot.send_photo(chat_id=update.message.chat_id, 
+                   photo=open('img/'+market+'.png', 'rb'))
 
 def s(bot, update, args):
     bot.send_chat_action(chat_id=update.message.chat_id, 
