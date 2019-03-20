@@ -7,7 +7,7 @@ from binance_trading_bot import utilities, analysis, monitor
 
 MANUAL_TEXT = """Data-driven analytics of crypto-market on Binance.
 *Commands*
-- /t <market> : demand versus supply imbalance.
+- /t <market> : volatility and supply analysis.
 Usage: /t qtumusdt or /t btt xlmusdt bttbnb.
 - /s <asset> : asset analysis.
 Usage: /s qtum or /s btt fet.
@@ -33,26 +33,27 @@ client = Client(BINANCE_API_KEY, BINANCE_SECRET_KEY)
 def t(bot, update, args):
     bot.send_chat_action(chat_id=update.message.chat_id, 
                          action=telegram.ChatAction.TYPING)
-    for market in args:
-        market = market.upper()
-        TIME_FRAME_STEP = ['15m', '15m']
-        TIME_FRAME = ['1d', '4h']
-        TIME_FRAME_DURATION = ['90 days ago UTC', '14 days ago UTC']
-        try:
-            analysis.analysis_visual(client, 
-                                     market, 
-                                     TIME_FRAME_STEP, 
-                                     TIME_FRAME, 
-                                     TIME_FRAME_DURATION)
-        except Exception:
-            market = market+'BTC'
-            analysis.analysis_visual(client, 
-                                     market, 
-                                     TIME_FRAME_STEP, 
-                                     TIME_FRAME, 
-                                     TIME_FRAME_DURATION)
-        bot.send_photo(chat_id=update.message.chat_id, 
-                   photo=open('img/'+market+'.png', 'rb'))
+    if str(update.message.from_user.username)==TELEGRAM_ADMIN_USERNAME:
+        for market in args:
+            market = market.upper()
+            TIME_FRAME_STEP = ['15m', '15m', '15m']
+            TIME_FRAME = ['1w', '1d', '4h']
+            TIME_FRAME_DURATION = ['365 days ago UTC', '90 days ago UTC', '14 days ago UTC']
+            try:
+                analysis.analysis_visual(client, 
+                                         market, 
+                                         TIME_FRAME_STEP, 
+                                         TIME_FRAME, 
+                                         TIME_FRAME_DURATION)
+            except Exception:
+                market = market+'BTC'
+                analysis.analysis_visual(client, 
+                                         market, 
+                                         TIME_FRAME_STEP, 
+                                         TIME_FRAME, 
+                                         TIME_FRAME_DURATION)
+            bot.send_photo(chat_id=update.message.chat_id, 
+                       photo=open('img/'+market+'.png', 'rb'))
 
 def s(bot, update, args):
     bot.send_chat_action(chat_id=update.message.chat_id, 
