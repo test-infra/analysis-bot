@@ -77,8 +77,13 @@ def analysis_visual(client, market, TIME_FRAME_STEP, TIME_FRAME, TIME_FRAME_DURA
                                  candles['low'],
                                  candles['close'],
                                  width=0.6, alpha=1)
-        ax1.plot(candles['close'].rolling(7).mean(), linewidth=4, color='violet', label='Moving Average (7)')
-        ax1.plot(candles['close'].rolling(13).mean(), linewidth=4, color='orange', label='Moving Average (13)')
+        std = candles['close'].rolling(window=20).std()
+        middle_bb = candles['close'].rolling(20).mean()
+        upper_bb = pd.Series(middle_bb + (2 * std))
+        lower_bb = pd.Series(middle_bb - (2 * std))
+        ax1.plot(middle_bb, linewidth=4, color='indigo')
+        ax1.plot(lower_bb, linewidth=4, color='violet')
+        ax1.plot(upper_bb, linewidth=4, color='violet')
         ax1.yaxis.grid(True)
         for tic in ax1.xaxis.get_major_ticks():
             tic.tick1On = tic.tick2On = False
