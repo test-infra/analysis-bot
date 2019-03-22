@@ -39,9 +39,9 @@ def x(bot, update, args):
         for market in args:
             market = market.upper()
             try:
-                TIME_FRAME_STEP = args[-3]
-                TIME_FRAME = args[-2]
-                TIME_FRAME_DURATION = args[-1].replace('_', ' ')
+                TIME_FRAME_STEP = [args[-3]]
+                TIME_FRAME = [args[-2]]
+                TIME_FRAME_DURATION = [args[-1].replace('_', ' ')]
                 analysis.analysis_visual(client, 
                                          market, 
                                          TIME_FRAME_STEP, 
