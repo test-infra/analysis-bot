@@ -7,8 +7,8 @@ from binance_trading_bot import utilities, analysis, monitor
 
 MANUAL_TEXT = """Data-driven analytics of crypto-market on Binance.
 *Commands*
-- /x <market> <time-step> <time-frame> <time-duration>
-Usage: /x fetbtc 15m 1h 3_days_ago_UTC. 
+- /x <market> <stamp> <frame> <duration>
+Usage: /x fetbtc 15m 1h 3\_days\_ago\_UTC. 
 - /t <market>
 Usage: /t qtumusdt or /t btt xlmusdt bttbnb.
 - /s <asset>
@@ -28,6 +28,7 @@ TELEGRAM_TOKEN = os.environ['TELEGRAM_TOKEN']
 BINANCE_SECRET_KEY = os.environ['BINANCE_SECRET_KEY']
 BINANCE_API_KEY = os.environ['BINANCE_API_KEY']
 TELEGRAM_ADMIN_USERNAME = os.environ['TELEGRAM_ADMIN_USERNAME']
+TELEGRAM_ADMIN_CHATID = os.environ['TELEGRAM_ADMIN_CHATID']
 
 userList = [TELEGRAM_ADMIN_USERNAME]
 
@@ -59,6 +60,9 @@ def x(bot, update, args):
                                          TIME_FRAME_DURATION)
             bot.send_photo(chat_id=update.message.chat_id, 
                        photo=open('img/'+market+'.png', 'rb'))
+    else:
+        bot.send_message(chat_id=TELEGRAM_ADMIN_CHATID, 
+                         text=str(update.message.from_user.username))
 
 def t(bot, update, args):
     bot.send_chat_action(chat_id=update.message.chat_id, 
@@ -84,6 +88,9 @@ def t(bot, update, args):
                                          TIME_FRAME_DURATION)
             bot.send_photo(chat_id=update.message.chat_id, 
                        photo=open('img/'+market+'.png', 'rb'))
+    else:
+        bot.send_message(chat_id=TELEGRAM_ADMIN_CHATID, 
+                         text=str(update.message.from_user.username))
 
 def s(bot, update, args):
     bot.send_chat_action(chat_id=update.message.chat_id, 
@@ -93,6 +100,9 @@ def s(bot, update, args):
             asset = asset.upper()
             msg = analysis.asset_analysis(client, asset)
             update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
+    else:
+        bot.send_message(chat_id=TELEGRAM_ADMIN_CHATID, 
+                         text=str(update.message.from_user.username))
 
 def m(bot, update):
     bot.send_chat_action(chat_id=update.message.chat_id, 
@@ -100,6 +110,9 @@ def m(bot, update):
     if str(update.message.from_user.username) in userList:
         msg = monitor.market_change(client)
         update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
+    else:
+        bot.send_message(chat_id=TELEGRAM_ADMIN_CHATID, 
+                         text=str(update.message.from_user.username))
         
 def admin(bot, update, args):
     bot.send_chat_action(chat_id=update.message.chat_id, 
@@ -126,7 +139,9 @@ def manual(bot,update):
                      text=MANUAL_TEXT, 
                      parse_mode=ParseMode.MARKDOWN, 
                      disable_web_page_preview=True)
-    update.message.reply_text(update.message.chat_id)
+    if str(update.message.from_user.username) not in userList:
+        bot.send_message(chat_id=TELEGRAM_ADMIN_CHATID, 
+                         text=str(update.message.from_user.username))
 
 def main():
     updater=Updater(TELEGRAM_TOKEN)
