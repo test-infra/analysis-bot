@@ -28,12 +28,41 @@ BINANCE_SECRET_KEY = os.environ['BINANCE_SECRET_KEY']
 BINANCE_API_KEY = os.environ['BINANCE_API_KEY']
 TELEGRAM_ADMIN_USERNAME = os.environ['TELEGRAM_ADMIN_USERNAME']
 
+userList = [TELEGRAM_ADMIN_USERNAME]
+
 client = Client(BINANCE_API_KEY, BINANCE_SECRET_KEY)
+
+def x(bot, update, args):
+    bot.send_chat_action(chat_id=update.message.chat_id, 
+                         action=telegram.ChatAction.TYPING)
+    if str(update.message.from_user.username) in userList:
+        for market in args:
+            market = market.upper()
+            try:
+                TIME_FRAME_STEP = args[-3]
+                TIME_FRAME = args[-2]
+                TIME_FRAME_DURATION = args[-1].replace('_', ' ')
+                analysis.analysis_visual(client, 
+                                         market, 
+                                         TIME_FRAME_STEP, 
+                                         TIME_FRAME, 
+                                         TIME_FRAME_DURATION)
+            except Exception:
+                TIME_FRAME_STEP = ['15m']
+                TIME_FRAME = ['1h']
+                TIME_FRAME_DURATION = ['3 days ago UTC']
+                analysis.analysis_visual(client, 
+                                         market, 
+                                         TIME_FRAME_STEP, 
+                                         TIME_FRAME, 
+                                         TIME_FRAME_DURATION)
+            bot.send_photo(chat_id=update.message.chat_id, 
+                       photo=open('img/'+market+'.png', 'rb'))
 
 def t(bot, update, args):
     bot.send_chat_action(chat_id=update.message.chat_id, 
                          action=telegram.ChatAction.TYPING)
-    if str(update.message.from_user.username)==TELEGRAM_ADMIN_USERNAME:
+    if str(update.message.from_user.username) in userList:
         for market in args:
             market = market.upper()
             TIME_FRAME_STEP = ['15m', '15m', '15m']
@@ -58,16 +87,18 @@ def t(bot, update, args):
 def s(bot, update, args):
     bot.send_chat_action(chat_id=update.message.chat_id, 
                          action=telegram.ChatAction.TYPING)
-    for asset in args:
-        asset = asset.upper()
-        msg = analysis.asset_analysis(client, asset)
-        update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
+    if str(update.message.from_user.username) in userList:
+        for asset in args:
+            asset = asset.upper()
+            msg = analysis.asset_analysis(client, asset)
+            update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
 
 def m(bot, update):
     bot.send_chat_action(chat_id=update.message.chat_id, 
                          action=telegram.ChatAction.TYPING)
-    msg = monitor.market_change(client)
-    update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
+    if str(update.message.from_user.username) in userList:
+        msg = monitor.market_change(client)
+        update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
         
 def admin(bot, update, args):
     bot.send_chat_action(chat_id=update.message.chat_id, 
@@ -101,6 +132,7 @@ def main():
     dp.add_handler(CommandHandler("start", manual))
     dp.add_handler(CommandHandler("help", manual))
     dp.add_handler(CommandHandler("m", m))
+    dp.add_handler(CommandHandler("x", x, pass_args=True))
     dp.add_handler(CommandHandler("t", t, pass_args=True))
     dp.add_handler(CommandHandler("s", s, pass_args=True))
     dp.add_handler(CommandHandler("admin", admin, pass_args=True))
