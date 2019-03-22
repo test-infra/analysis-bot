@@ -7,20 +7,21 @@ from binance_trading_bot import utilities, analysis, monitor
 
 MANUAL_TEXT = """Data-driven analytics of crypto-market on Binance.
 *Commands*
-- /t <market> : volatility and supply analysis.
+- /x <market> <time-step> <time-frame> <time-duration>
+Usage: /x fetbtc 15m 1h 3_days_ago_UTC. 
+- /t <market>
 Usage: /t qtumusdt or /t btt xlmusdt bttbnb.
-- /s <asset> : asset analysis.
+- /s <asset>
 Usage: /s qtum or /s btt fet.
-- /m : market statistics.
+- /m
 Usage: /m.
 *Supports*
 Start trading on [Binance](https://www.binance.com/?ref=13339920), [Huobi](https://www.huobi.br.com/en-us/topic/invited/?invite_code=x93k3) or [Coinbase](https://www.coinbase.com/join/581a706d01bc8b00dd1d1737).
 Use the [Brave](https://brave.com/ken335) privacy browser to earn BAT token.
 BTC tipjar: [1DrEMhMP5rAytKyKXRzc6szTcUX8bZzZgq](1DrEMhMP5rAytKyKXRzc6szTcUX8bZzZgq).
 *Contact*
-@tjeuphi
-*Website*
-[https://kenhtaichinh.herokuapp.com](https://kenhtaichinh.herokuapp.com).
+@kakalotz
+_Disclammer: only accessible for registered users._
  """
 
 TELEGRAM_TOKEN = os.environ['TELEGRAM_TOKEN']
@@ -125,6 +126,7 @@ def manual(bot,update):
                      text=MANUAL_TEXT, 
                      parse_mode=ParseMode.MARKDOWN, 
                      disable_web_page_preview=True)
+    update.message.reply_text(update.message.chat_id)
 
 def main():
     updater=Updater(TELEGRAM_TOKEN)
